@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['middleware' => 'guest'], function() {
+    Route::get('login', \App\Http\Livewire\Auth\LoginView::class)->name('auth.login');
+    Route::get('register', \App\Http\Livewire\Auth\RegisterView::class)->name('auth.register');
+    Route::get('reset_password', \App\Http\Livewire\Auth\ResetPasswordView::class)->name('auth.reset-password');
 });
