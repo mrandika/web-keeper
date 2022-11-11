@@ -20,7 +20,7 @@ class Warehouse extends Model
 
     public function admin()
     {
-        return $this->hasOne(Admin::class);
+        return $this->belongsTo(Admin::class);
     }
 
     public function employees()

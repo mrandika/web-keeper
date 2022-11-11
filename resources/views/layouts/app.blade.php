@@ -39,6 +39,8 @@
     @livewireScripts
 
     <!-- Template JS File -->
+    <script src="{{ asset('js/script.js') }}"></script>
+    <script src="{{ asset('js/custom.js') }}"></script>
 
     <!-- Page Specific JS File -->
     @yield('js')

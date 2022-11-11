@@ -7,6 +7,17 @@
 @endsection
 
 <div>
+    @if(session('info'))
+        <div class="alert alert-light alert-dismissible show fade">
+            <div class="alert-body">
+                <button class="close" data-dismiss="alert">
+                    <span>×</span>
+                </button>
+                {{ session('info') }}
+            </div>
+        </div>
+    @endif
+
     <form wire:submit.prevent="login" class="needs-validation" novalidate="">
         <div class="form-group">
             <label for="email">Email</label>
@@ -30,6 +41,13 @@
                 {{ $message }}
             </div>
             @enderror
+        </div>
+
+        <div class="form-group">
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" name="remember" class="custom-control-input" tabindex="3" wire:model="remember" id="remember-me">
+                <label class="custom-control-label" for="remember-me">Ingat saya</label>
+            </div>
         </div>
 
         <div class="form-group text-right">

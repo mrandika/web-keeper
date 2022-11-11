@@ -2,12 +2,13 @@
 
 namespace App\Http\Livewire\Auth;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\Password;
 use Livewire\Component;
 
 class LoginView extends Component
 {
-    public $email, $password;
+    public $email, $password, $remember = false;
 
     public function render()
     {
@@ -25,6 +26,12 @@ class LoginView extends Component
     {
         $this->email = '';
         $this->password = '';
+        $this->remember = '';
+    }
+
+    public function flash_message(string $key, string $value)
+    {
+        session()->flash($key, $value);
     }
 
     public function login()
@@ -34,6 +41,11 @@ class LoginView extends Component
             'password' => ['required', Password::min(8)->letters()->numbers()->symbols()->mixedCase()],
         ]);
 
-        $this->reset_fields();
+        if (Auth::attempt(['email' => $this->email, 'password' => $this->password], $this->remember)) {
+            $this->redirect_page('home');
+            $this->reset_fields();
+        } else {
+            $this->flash_message('info', 'Alamat email atau password tidak ditemukan. Pastikan anda memasukan alamat email dan password dengan benar.');
+        }
     }
 }
