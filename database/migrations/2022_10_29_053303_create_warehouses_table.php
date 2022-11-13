@@ -15,14 +15,11 @@ return new class extends Migration
     {
         Schema::create('warehouses', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('admin_id');
             $table->string('name', 75);
             $table->text('address');
             $table->double('latitude');
             $table->double('longitude');
             $table->timestamps();
-
-            $table->foreign('admin_id')->references('id')->on('admins')->onDelete('cascade');
         });
     }
 

@@ -11,6 +11,6 @@ class Employee extends Model
 
     public function warehouse()
     {
-        return $this->belongsTo(Warehouse::class);
+        return $this->belongsToMany(Warehouse::class);
     }
 }

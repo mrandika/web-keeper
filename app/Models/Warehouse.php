@@ -18,11 +18,14 @@ class Warehouse extends Model
         'longitude'
     ];
 
+<<<<<<< Updated upstream
     public function admin()
     {
         return $this->hasOne(Admin::class);
     }
 
+=======
+>>>>>>> Stashed changes
     public function employees()
     {
         return $this->hasMany(Employee::class);
