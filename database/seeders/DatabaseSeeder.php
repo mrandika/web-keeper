@@ -34,12 +34,12 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             UserDataSeeder::class,
-            AdminSeeder::class,
             WarehouseSeeder::class,
             WarehouseAisleSeeder::class,
             WarehouseAisleColumnSeeder::class,
             WarehouseAisleRowSeeder::class,
             WarehouseStorageSeeder::class,
+            EmployeeSeeder::class,
             ItemSeeder::class,
             ItemLocationSeeder::class
         ]);
