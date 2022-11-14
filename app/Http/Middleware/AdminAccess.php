@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\Admin;
+use App\Models\Employee;
 use App\Models\User;
 use Closure;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -25,11 +25,11 @@ class AdminAccess
         if ($auth) {
             try {
                 $user = User::findOrFail($auth->id);
-                $admin = Admin::where('user_id', $user->id)->first();
+                $employee = Employee::where('user_id', $user->id)->first();
 
                 if (($user->role->name == 'Super-Admin' || $user->role->name == 'Admin')) {
-                    if (isset($admin)) {
-                        if ($admin->status == 1) {
+                    if (isset($employee)) {
+                        if ($employee->status == 1) {
                             return $next($request);
                         } else {
                             Auth::logout();
