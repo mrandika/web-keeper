@@ -18,6 +18,7 @@ class WarehouseSeeder extends Seeder
     public function run()
     {
         Warehouse::create([
+            'user_id' => User::where('email', 'superadmin@keeper.com')->first()->id,
             'name' => 'Warehouse Keeper',
             'address' => 'Jalan Telekomunikasi 1',
             'latitude' => -6.973260519819465,

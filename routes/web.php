@@ -31,6 +31,19 @@ Route::group(['middleware' => 'auth'], function() {
 
 Route::group(['prefix' => 'super_admin', 'middleware' => 'auth.super-admin'], function(){
     Route::get('', \App\Http\Livewire\SuperAdmin\DashboardView::class)->name('superadmin.home');
+
+    Route::group(['prefix' => 'warehouse'], function() {
+        Route::get('', \App\Http\Livewire\Warehouse\IndexView::class)->name('warehouse.index');
+        Route::get('show/{warehouse_id}', \App\Http\Livewire\Warehouse\ShowView::class)->name('warehouse.show');
+        Route::get('destroy/{warehouse_id}', \App\Http\Livewire\Warehouse\DestroyView::class)->name('warehouse.destroy');
+        Route::get('edit/{warehouse_id}', \App\Http\Livewire\Warehouse\EditView::class)->name('warehouse.edit');
+
+        Route::group(['prefix' => 'new'], function() {
+            Route::get('', \App\Http\Livewire\Warehouse\CreateView::class)->name('warehouse.create');
+            Route::get('{warehouse_id}/storage', \App\Http\Livewire\Warehouse\CreateStorageView::class)->name('warehouse.create.storage');
+            Route::get('{warehouse_id}/summary', \App\Http\Livewire\Warehouse\CreateSummaryView::class)->name('warehouse.create.summary');
+        });
+    });
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth.admin'], function(){

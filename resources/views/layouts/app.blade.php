@@ -20,6 +20,8 @@
     <link rel="stylesheet" href="{{ asset('css/components.css') }}">
 
     <script src="{{ asset('js/app.js') }}" defer></script>
+
+    @yield('js-head')
 </head>
 
 <body>

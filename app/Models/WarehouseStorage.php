@@ -24,4 +24,9 @@ class WarehouseStorage extends Model
     {
         return $this->belongsTo(WarehouseAisleRow::class, 'warehouse_aisle_row_id');
     }
+
+    public function locations()
+    {
+        return $this->hasMany(ItemLocation::class);
+    }
 }

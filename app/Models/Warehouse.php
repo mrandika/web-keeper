@@ -11,21 +11,26 @@ class Warehouse extends Model
     use HasFactory, HasUuids;
 
     protected $fillable = [
-        'admin_id',
+        'user_id',
         'name',
         'address',
         'latitude',
         'longitude'
     ];
 
-    public function admin()
+    public function user()
     {
-        return $this->belongsTo(Admin::class);
+        return $this->belongsTo(User::class);
     }
 
     public function employees()
     {
         return $this->hasMany(Employee::class);
+    }
+
+    public function items()
+    {
+        return $this->hasMany(Item::class);
     }
 
     public function storages()
