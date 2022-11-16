@@ -18,7 +18,7 @@ class EditView extends Component
 
     public function render()
     {
-        $this->warehouse = Warehouse::find($this->warehouse_id);
+        $this->warehouse = Warehouse::findOrFail($this->warehouse_id);
         return view('livewire.warehouse.edit-view', ['warehouse' => $this->warehouse])
             ->extends('layouts.dashboard')
             ->section('main');

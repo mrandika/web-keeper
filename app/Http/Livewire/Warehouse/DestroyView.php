@@ -19,7 +19,7 @@ class DestroyView extends Component
     public function render()
     {
         $warehouse_counts = Warehouse::where('user_id', Auth::user()->id)->count();
-        $this->warehouse = Warehouse::find($this->warehouse_id);
+        $this->warehouse = Warehouse::findOrFail($this->warehouse_id);
 
         return view('livewire.warehouse.destroy-view', ['warehouse' => $this->warehouse, 'count' => $warehouse_counts])
             ->extends('layouts.dashboard')

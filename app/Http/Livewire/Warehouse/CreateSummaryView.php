@@ -17,7 +17,7 @@ class CreateSummaryView extends Component
 
     public function render()
     {
-        $warehouse = Warehouse::find($this->warehouse_id);
+        $warehouse = Warehouse::findOrFail($this->warehouse_id);
         $this->long = $warehouse->longitude;
         $this->lat = $warehouse->latitude;
 
