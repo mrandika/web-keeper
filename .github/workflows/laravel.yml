@@ -2,9 +2,9 @@ name: Laravel
 
 on:
   push:
-    branches: [ "main", "development", "feature-auth", "feature-wrhe", "feature-emle", "feature-item", "feature-trns" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "main", "development" ]
+    branches: [ "main" ]
 
 jobs:
   laravel-tests:
@@ -28,11 +28,9 @@ jobs:
         run: |
           mkdir -p database
           touch database/database.sqlite
-      - name: Set environment variables
+          php artisan migrate:fresh && php artisan db:seed
+      - name: Execute tests (Unit and Feature tests) via PHPUnit
         env:
           DB_CONNECTION: sqlite
           DB_DATABASE: database/database.sqlite
-      - name: Migrate and seed database
-        run: php artisan migrate:fresh && php artisan db:seed
-      - name: Execute test via PHPUnit
         run: php artisan test
