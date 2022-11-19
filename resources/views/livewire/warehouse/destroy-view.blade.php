@@ -42,7 +42,7 @@
                             </div>
                             <h2>Anda yakin menghapus data warehouse ini?</h2>
                             <p class="lead">
-                                Data yang berkaitan dengan warehouse ini, seperti pegawai, barang, dan transaksi akan dihapus. Aksi ini <b>TIDAK DAPAT</b> dikembalikan.
+                                Data yang berkaitan dengan warehouse ini, seperti pegawai, barang, dan transaksi akan dihapus. Aksi ini <b>TIDAK DAPAT</b> dikembalikan dan akan dicatat pada log sistem.
                             </p>
                             <a href="#" wire:click="destroy" class="btn btn-danger mt-4">Ya, hapus</a>
 

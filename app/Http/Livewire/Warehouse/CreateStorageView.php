@@ -6,8 +6,10 @@ use App\Models\WarehouseAisle;
 use App\Models\WarehouseAisleColumn;
 use App\Models\WarehouseAisleRow;
 use App\Models\WarehouseStorage;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 use Livewire\Component;
 
 class CreateStorageView extends Component
@@ -15,11 +17,22 @@ class CreateStorageView extends Component
     public $warehouse_id;
     public $code, $aisle, $column, $row;
 
+    /**
+     * Mount the Livewire component
+     * Mounting the component will ONLY set the data once, even the view is refreshed/rerendered.
+     *
+     * @return void
+     */
     public function mount($warehouse_id)
     {
         $this->warehouse_id = $warehouse_id;
     }
 
+    /**
+     * Render Livewire component
+     *
+     * @return View
+     */
     public function render()
     {
         return view('livewire.warehouse.create-storage-view')
@@ -27,6 +40,14 @@ class CreateStorageView extends Component
             ->section('main');
     }
 
+    /**
+     * Redirect to specified route name
+     *
+     * @param string $route_name    The route name declared on routing file
+     * @param $param                The data sent to specified $route_name, default is null
+     *
+     * @return RedirectResponse
+     */
     public function redirect_page(string $route_name, $param = null)
     {
         if (isset($param)) {
@@ -36,13 +57,18 @@ class CreateStorageView extends Component
         }
     }
 
+    /**
+     * Save the storage for given $warehouse_id
+     *
+     * @return RedirectResponse
+     */
     public function save_storage()
     {
         $this->validate([
             'code' => ['required', 'min:2', 'max:6'],
-            'aisle' => ['required', 'numeric'],
-            'column' => ['required', 'numeric'],
-            'row' => ['required', 'numeric'],
+            'aisle' => ['required', 'numeric', 'between:1,5'],
+            'column' => ['required', 'numeric', 'between:1,5'],
+            'row' => ['required', 'numeric', 'between:1,5'],
         ]);
 
         DB::transaction(function () {

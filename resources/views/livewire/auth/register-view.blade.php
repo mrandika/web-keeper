@@ -38,6 +38,9 @@
         <div class="form-group">
             <label for="phone_number">Nomor Telepon</label>
             <input id="phone_number" type="tel" class="form-control @error('phone_number') is-invalid @enderror" name="phone_number" tabindex="3" wire:model="phone_number" required>
+            <small id="phonenumberHelpBlock" class="form-text text-muted">
+                Nomor telepon anda harus dimulai dengan angka.
+            </small>
 
             @error('phone_number')
             <div class="invalid-feedback">
@@ -77,7 +80,7 @@
             <div class="d-block">
                 <label for="password_confirmation" class="control-label">Konfirmasi Kata Sandi</label>
             </div>
-            <input id="password_confirmation" type="password" class="form-control @error('password_confirm') is-invalid @enderror" name="password_confirmation" wire:model="password_confirmation" tabindex="5" required>
+            <input id="password_confirmation" type="password" class="form-control @error('password_confirmation') is-invalid @enderror" name="password_confirmation" wire:model="password_confirmation" tabindex="5" required>
 
             @error('password_confirmation')
             <div class="invalid-feedback">

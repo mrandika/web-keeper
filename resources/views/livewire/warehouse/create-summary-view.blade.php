@@ -122,13 +122,13 @@
         $(document).on('turbolinks:load',function () {
             var map = new GMaps({
                 div: '#map',
-                lat: @this.get('lat'),
-                lng: @this.get('long')
+                lat: {{ $warehouse->latitude }},
+                lng: {{ $warehouse->longitude }}
             });
 
             map.addMarker({
-                lat: @this.get('lat'),
-                lng: @this.get('long'),
+                lat: {{ $warehouse->latitude }},
+                lng: {{ $warehouse->longitude }},
                 title: 'Warehouse'
             });
         })

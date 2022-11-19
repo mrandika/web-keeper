@@ -21,7 +21,7 @@ class ActionLog
         $date = date('Y-m-d');
         $user = Auth::user();
 
-        $data = '['.date('Y-m-d H:i:s').'] '.strtoupper($action).' - '. url()->current().' ('.$user->email.')';
+        $data = '['.date('Y-m-d H:i:s').'] '.$user->id.' '.strtoupper($action).' - '. url()->current();
         $checksum = encrypt($data);
 
         Storage::disk('local')->append('keeper-'.$date.'.log', $data, PHP_EOL);
