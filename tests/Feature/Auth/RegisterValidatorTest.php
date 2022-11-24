@@ -3,8 +3,6 @@
 namespace Tests\Feature\Auth;
 
 use App\Http\Livewire\Auth\RegisterView;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Livewire\Livewire;
 use Tests\TestCase;
 

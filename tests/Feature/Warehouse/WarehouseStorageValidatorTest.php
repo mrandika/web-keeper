@@ -2,12 +2,9 @@
 
 namespace Tests\Feature\Warehouse;
 
-use App\Http\Livewire\Warehouse\CreateStorageView;
-use App\Http\Livewire\Warehouse\CreateView;
+use App\Http\Livewire\Feature\Warehouse\CreateStorageView;
 use App\Models\User;
 use App\Models\Warehouse;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Livewire\Livewire;
 use Tests\TestCase;
 

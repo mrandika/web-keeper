@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Livewire\Warehouse;
+namespace App\Http\Livewire\Feature\Warehouse;
 
 use App\Models\Warehouse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Livewire\Component;
 
-class DestroyView extends Component
+class EditView extends Component
 {
     public $warehouse;
+    public $name, $address, $longitude, $latitude;
     public $warehouse_id;
 
     /**
@@ -31,10 +31,8 @@ class DestroyView extends Component
      */
     public function render()
     {
-        $warehouse_counts = Warehouse::where('user_id', Auth::user()->id)->count();
         $this->warehouse = Warehouse::findOrFail($this->warehouse_id);
-
-        return view('livewire.warehouse.destroy-view', ['warehouse' => $this->warehouse, 'count' => $warehouse_counts])
+        return view('livewire.feature.warehouse.edit-view', ['warehouse' => $this->warehouse])
             ->extends('layouts.dashboard')
             ->section('main');
     }
@@ -57,26 +55,40 @@ class DestroyView extends Component
     }
 
     /**
-     * Set flash message for this current session
+     * Set local variables to current warehouse data
+     * Fill the variable model
      *
      * @return void
      */
-    public function flash_message(string $key, string $value)
+    public function edit()
     {
-        session()->flash($key, $value);
+        $this->name = $this->warehouse->name;
+        $this->address = $this->warehouse->address;
+        $this->latitude = $this->warehouse->latitude;
+        $this->longitude = $this->warehouse->longitude;
     }
 
     /**
-     * Destroy the $warehouse_id from database
+     * Update current changes $warehouse_id to database
      *
      * @return RedirectResponse
      */
-    public function destroy()
+    public function update()
     {
-        $warehouse = Warehouse::find($this->warehouse_id);
-        $warehouse->delete();
+        $this->validate([
+            'name' => ['required', 'min:10', 'max:75'],
+            'address' => ['required'],
+            'latitude' => ['required'],
+            'longitude' => ['required'],
+        ]);
 
-        $this->flash_message('info', "Warehouse dengan nama `$warehouse->name` berhasil dihapus.");
-        $this->redirect_page('warehouse.index');
+        $warehouse = Warehouse::find($this->warehouse_id);
+        $warehouse->name = $this->name;
+        $warehouse->address = $this->address;
+        $warehouse->latitude = $this->latitude;
+        $warehouse->longitude = $this->longitude;
+        $warehouse->save();
+
+        $this->redirect_page('warehouse.show', $this->warehouse_id);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Warehouse;
+namespace App\Http\Livewire\Feature\Warehouse;
 
 use App\Models\WarehouseAisle;
 use App\Models\WarehouseAisleColumn;
@@ -35,7 +35,7 @@ class CreateStorageView extends Component
      */
     public function render()
     {
-        return view('livewire.warehouse.create-storage-view')
+        return view('livewire.feature.warehouse.create-storage-view')
             ->extends('layouts.dashboard')
             ->section('main');
     }

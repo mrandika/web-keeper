@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Warehouse;
 
-use App\Http\Livewire\Warehouse\CreateView;
+use App\Http\Livewire\Feature\Warehouse\CreateView;
 use App\Models\User;
 use Livewire\Livewire;
 use Tests\TestCase;

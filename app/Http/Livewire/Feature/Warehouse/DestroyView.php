@@ -1,17 +1,16 @@
 <?php
 
-namespace App\Http\Livewire\Warehouse;
+namespace App\Http\Livewire\Feature\Warehouse;
 
-use App\Models\ItemLocation;
 use App\Models\Warehouse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Livewire\Component;
 
-class ShowView extends Component
+class DestroyView extends Component
 {
     public $warehouse;
-    public $name, $address;
     public $warehouse_id;
 
     /**
@@ -32,9 +31,10 @@ class ShowView extends Component
      */
     public function render()
     {
+        $warehouse_counts = Warehouse::where('user_id', Auth::user()->id)->count();
         $this->warehouse = Warehouse::findOrFail($this->warehouse_id);
 
-        return view('livewire.warehouse.show-view', ['warehouse' => $this->warehouse])
+        return view('livewire.feature.warehouse.destroy-view', ['warehouse' => $this->warehouse, 'count' => $warehouse_counts])
             ->extends('layouts.dashboard')
             ->section('main');
     }
@@ -54,5 +54,29 @@ class ShowView extends Component
         } else {
             return redirect()->route($route_name);
         }
+    }
+
+    /**
+     * Set flash message for this current session
+     *
+     * @return void
+     */
+    public function flash_message(string $key, string $value)
+    {
+        session()->flash($key, $value);
+    }
+
+    /**
+     * Destroy the $warehouse_id from database
+     *
+     * @return RedirectResponse
+     */
+    public function destroy()
+    {
+        $warehouse = Warehouse::find($this->warehouse_id);
+        $warehouse->delete();
+
+        $this->flash_message('info', "Warehouse dengan nama `$warehouse->name` berhasil dihapus.");
+        $this->redirect_page('warehouse.index');
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Warehouse;
+namespace App\Http\Livewire\Feature\Warehouse;
 
 use App\Models\Warehouse;
 use Illuminate\Http\RedirectResponse;
@@ -26,7 +26,7 @@ class CreateView extends Component
      */
     public function render()
     {
-        return view('livewire.warehouse.create-view')
+        return view('livewire.feature.warehouse.create-view')
             ->extends('layouts.dashboard')
             ->section('main');
     }

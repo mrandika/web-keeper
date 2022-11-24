@@ -4,8 +4,6 @@ namespace Tests\Feature\Warehouse;
 
 use App\Models\User;
 use App\Models\Warehouse;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class WarehouseViewTest extends TestCase
@@ -20,11 +18,11 @@ class WarehouseViewTest extends TestCase
 
         $this->get(route('warehouse.index'))
             ->assertSuccessful()
-            ->assertSeeLivewire('warehouse.index-view');
+            ->assertSeeLivewire('feature.warehouse.index-view');
 
         $this->get(route('warehouse.show', Warehouse::where('name', 'Warehouse Keeper')->first()->id))
             ->assertSuccessful()
-            ->assertSeeLivewire('warehouse.show-view');
+            ->assertSeeLivewire('feature.warehouse.show-view');
     }
 
     /**
@@ -37,15 +35,15 @@ class WarehouseViewTest extends TestCase
 
         $this->get(route('warehouse.create'))
             ->assertSuccessful()
-            ->assertSeeLivewire('warehouse.create-view');
+            ->assertSeeLivewire('feature.warehouse.create-view');
 
         $this->get(route('warehouse.create.storage', Warehouse::where('name', 'Warehouse Keeper')->first()->id))
             ->assertSuccessful()
-            ->assertSeeLivewire('warehouse.create-storage-view');
+            ->assertSeeLivewire('feature.warehouse.create-storage-view');
 
         $this->get(route('warehouse.create.summary', Warehouse::where('name', 'Warehouse Keeper')->first()->id))
             ->assertSuccessful()
-            ->assertSeeLivewire('warehouse.create-summary-view');
+            ->assertSeeLivewire('feature.warehouse.create-summary-view');
     }
 
     /**
@@ -58,10 +56,10 @@ class WarehouseViewTest extends TestCase
 
         $this->get(route('warehouse.destroy', Warehouse::where('name', 'Warehouse Keeper')->first()->id))
             ->assertSuccessful()
-            ->assertSeeLivewire('warehouse.destroy-view');
+            ->assertSeeLivewire('feature.warehouse.destroy-view');
 
         $this->get(route('warehouse.edit', Warehouse::where('name', 'Warehouse Keeper')->first()->id))
             ->assertSuccessful()
-            ->assertSeeLivewire('warehouse.edit-view');
+            ->assertSeeLivewire('feature.warehouse.edit-view');
     }
 }

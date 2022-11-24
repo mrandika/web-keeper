@@ -1,26 +1,26 @@
 <?php
 
-namespace App\Http\Livewire\Warehouse;
+namespace App\Http\Livewire\Feature\Warehouse;
 
+use App\Models\Employee;
 use App\Models\Warehouse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Livewire\Component;
 
-class CreateSummaryView extends Component
+class IndexView extends Component
 {
-    public $warehouse_id;
-    public $long, $lat;
+    public $search_value = '';
 
     /**
-     * Mount the Livewire component
-     * Mounting the component will ONLY set the data once, even the view is refreshed/rerendered.
+     * Reset the page when search value is updated
      *
      * @return void
      */
-    public function mount($warehouse_id)
+    public function updatingSearch()
     {
-        $this->warehouse_id = $warehouse_id;
+        $this->resetPage();
     }
 
     /**
@@ -30,11 +30,11 @@ class CreateSummaryView extends Component
      */
     public function render()
     {
-        $warehouse = Warehouse::findOrFail($this->warehouse_id);
-        $this->long = $warehouse->longitude;
-        $this->lat = $warehouse->latitude;
+        $user = Auth::user();
 
-        return view('livewire.warehouse.create-summary-view', ['warehouse' => $warehouse])
+        $warehouses = Warehouse::where('user_id', $user->id)->where('name', 'like', '%'.$this->search_value.'%')->get();
+
+        return view('livewire.feature.warehouse.index-view', ['warehouses' => $warehouses])
             ->extends('layouts.dashboard')
             ->section('main');
     }
