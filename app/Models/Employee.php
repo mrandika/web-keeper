@@ -10,6 +10,11 @@ class Employee extends Model
 {
     use HasFactory, HasUuids;
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function warehouse()
     {
         return $this->belongsTo(Warehouse::class);
