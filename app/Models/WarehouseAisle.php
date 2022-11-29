@@ -15,6 +15,11 @@ class WarehouseAisle extends Model
         'code'
     ];
 
+    public function warehouse()
+    {
+        return $this->belongsTo(Warehouse::class);
+    }
+
     public function columns()
     {
         return $this->hasMany(WarehouseAisleColumn::class);

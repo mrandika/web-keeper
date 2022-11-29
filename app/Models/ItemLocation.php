@@ -17,7 +17,7 @@ class ItemLocation extends Model
 
     public function storage()
     {
-        return $this->belongsTo(WarehouseStorage::class);
+        return $this->belongsTo(WarehouseStorage::class, 'warehouse_storage_id');
     }
 
     public function item()

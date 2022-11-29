@@ -17,10 +17,8 @@ class ItemSeeder extends Seeder
     public function run()
     {
         Item::create([
-            'warehouse_id' => Warehouse::where('name', 'Warehouse Keeper')->first()->id,
             'name' => 'Product A',
             'sku' => 'A-A01-B1_C01',
-            'stock' => 100,
             'price' => 1000
         ]);
     }
