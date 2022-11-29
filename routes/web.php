@@ -76,6 +76,30 @@ Route::group(['prefix' => 'super_admin', 'middleware' => 'auth.super-admin'], fu
             ->middleware('log:POST')
             ->name('employee.create');
     });
+
+    Route::group(['prefix' => 'item'], function () {
+        Route::get('', \App\Http\Livewire\Feature\Item\IndexView::class)
+            ->middleware('log:GET')
+            ->name('item.index');
+        Route::get('show/{item_id}', \App\Http\Livewire\Feature\Item\ShowView::class)
+            ->middleware('log:GET')
+            ->name('item.show');
+        Route::get('destroy/{item_id}', \App\Http\Livewire\Feature\Item\DestroyView::class)
+            ->middleware('log:DELETE')
+            ->name('item.destroy');
+        Route::get('edit/{item_id}', \App\Http\Livewire\Feature\Item\EditView::class)
+            ->middleware('log:PUT')
+            ->name('item.edit');
+        Route::get('new', \App\Http\Livewire\Feature\Item\CreateView::class)
+            ->middleware('log:POST')
+            ->name('item.create');
+
+        Route::group(['prefix' => 'location'], function () {
+            Route::get('new/{item_id}', \App\Http\Livewire\Feature\Item\CreateLocationView::class)
+                ->middleware('log:POST')
+                ->name('item.location.create');
+        });
+    });
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth.admin'], function(){

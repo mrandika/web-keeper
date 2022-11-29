@@ -26,7 +26,8 @@ class ItemLocationSeeder extends Seeder
                 'warehouse_aisle_id' => WarehouseAisle::where('code', 'KEEPER-A01')->first()->id,
                 'warehouse_aisle_column_id' => WarehouseAisleColumn::where('code', 'A01-B1')->first()->id,
                 'warehouse_aisle_row_id' => WarehouseAisleRow::where('code', 'A01-B1_C01')->first()->id,
-            ])->first()->id
+            ])->first()->id,
+            'stock' => 100
         ]);
     }
 }
