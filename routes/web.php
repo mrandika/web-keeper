@@ -58,6 +58,24 @@ Route::group(['prefix' => 'super_admin', 'middleware' => 'auth.super-admin'], fu
                 ->name('warehouse.create.summary');
         });
     });
+
+    Route::group(['prefix' => 'employee'], function () {
+        Route::get('', \App\Http\Livewire\Feature\Employee\IndexView::class)
+            ->middleware('log:GET')
+            ->name('employee.index');
+        Route::get('show/{employee_id}', \App\Http\Livewire\Feature\Employee\ShowView::class)
+            ->middleware('log:GET')
+            ->name('employee.show');
+        Route::get('destroy/{employee_id}', \App\Http\Livewire\Feature\Employee\DestroyView::class)
+            ->middleware('log:DELETE')
+            ->name('employee.destroy');
+        Route::get('edit/{employee_id}', \App\Http\Livewire\Feature\Employee\EditView::class)
+            ->middleware('log:PUT')
+            ->name('employee.edit');
+        Route::get('new', \App\Http\Livewire\Feature\Employee\CreateView::class)
+            ->middleware('log:POST')
+            ->name('employee.create');
+    });
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth.admin'], function(){
