@@ -22,7 +22,11 @@ class EmployeeTest extends TestCase
     {
         $this->actingAs(User::where('email', 'superadmin@keeper.com')->first());
 
-        $user = User::inRandomOrder()->first();
+        $user = User::inRandomOrder()->whereNotIn('email', [
+            'superadmin@keeper.com',
+            'admin@keeper.com',
+            'employee@keeper.com',
+        ])->first();
         $warehouse = Warehouse::inRandomOrder()->first();
 
         $test = Livewire::test(CreateView::class);
