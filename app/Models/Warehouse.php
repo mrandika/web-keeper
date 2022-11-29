@@ -28,11 +28,6 @@ class Warehouse extends Model
         return $this->hasMany(Employee::class);
     }
 
-    public function items()
-    {
-        return $this->hasMany(Item::class);
-    }
-
     public function storages()
     {
         return $this->hasManyThrough(WarehouseStorage::class, WarehouseAisle::class);

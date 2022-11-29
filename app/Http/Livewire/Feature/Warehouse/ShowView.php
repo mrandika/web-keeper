@@ -2,9 +2,11 @@
 
 namespace App\Http\Livewire\Feature\Warehouse;
 
+use App\Models\Item;
 use App\Models\ItemLocation;
 use App\Models\Warehouse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Livewire\Component;
 
@@ -32,9 +34,20 @@ class ShowView extends Component
      */
     public function render()
     {
-        $this->warehouse = Warehouse::findOrFail($this->warehouse_id);
+        $user = Auth::user();
 
-        return view('livewire.feature.warehouse.show-view', ['warehouse' => $this->warehouse])
+        $this->warehouse = Warehouse::findOrFail($this->warehouse_id);
+        $items = Item::with('locations')->whereHas('locations', function ($location_query) use ($user) {
+            $location_query->with('storage')->whereHas('storage', function ($storage_query) use ($user) {
+                $storage_query->with('aisle')->whereHas('aisle', function ($aisle_query) use ($user) {
+                    $aisle_query->with('warehouse')->whereHas('warehouse', function ($wh_query) use ($user) {
+                        $wh_query->where('id', $this->warehouse_id)->where('user_id', $user->id);
+                    });
+                });
+            });
+        })->get();
+
+        return view('livewire.feature.warehouse.show-view', ['warehouse' => $this->warehouse, 'items' => $items])
             ->extends('layouts.dashboard')
             ->section('main');
     }

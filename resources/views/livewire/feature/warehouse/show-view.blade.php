@@ -44,7 +44,7 @@
                                 </div>
                                 <div class="profile-widget-item">
                                     <div class="profile-widget-item-label">Barang</div>
-                                    <div class="profile-widget-item-value">{{ $warehouse->items->count() }}</div>
+                                    <div class="profile-widget-item-value">{{ $items->count() }}</div>
                                 </div>
                             </div>
                         </div>
@@ -77,19 +77,23 @@
 
                         <div class="card-body">
                             <ul class="list-unstyled list-unstyled-border">
-                                @forelse($warehouse->items as $item)
+                                @forelse($items as $item)
                                     <li class="media" wire:click="redirect_page('warehouse.show', '{{ $item->id }}')">
                                         <img class="mr-3 rounded" width="55" src="{{ asset('image/package.png') }}" alt="{{ $item->name }}">
                                         <div class="media-body">
                                             <div class="float-right">
                                                 <div class="font-weight-600 text-muted text-small">
-                                                    Stock: {{ $item->stock }}
+                                                    @php
+                                                        $stock = $item->locations->pluck('stock')->sum()
+                                                    @endphp
 
-                                                    @if ($item->stock >= 100)
+                                                    Stock: {{ $stock }}
+
+                                                    @if ($stock >= 100)
                                                         <i class="fas fa-circle" style="color: green"></i>
-                                                    @elseif($item->stock > 25 && $item->stock <= 50)
+                                                    @elseif($stock > 25 && $stock <= 50)
                                                         <i class="fas fa-circle" style="color: orange"></i>
-                                                    @elseif($item->stock <= 25)
+                                                    @elseif($stock <= 25)
                                                         <i class="fas fa-circle" style="color: red"></i>
                                                     @endif
                                                 </div>
