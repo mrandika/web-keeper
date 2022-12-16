@@ -13,7 +13,7 @@
         <div class="section-header">
             <h1>Pegawai</h1>
             <div class="section-header-button">
-                <a href="{{ route('warehouse.create') }}" class="btn btn-primary">Tambah Baru</a>
+                <a href="{{ route('employee.create') }}" class="btn btn-primary">Tambah Baru</a>
             </div>
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active"><a href="{{ route('superadmin.home') }}">Dashboard</a></div>
