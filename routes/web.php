@@ -100,6 +100,27 @@ Route::group(['prefix' => 'super_admin', 'middleware' => 'auth.super-admin'], fu
                 ->name('item.location.create');
         });
     });
+
+    Route::group(['prefix' => 'transaction'], function () {
+        Route::get('debit', \App\Http\Livewire\Feature\Transaction\DebitView::class)
+            ->middleware('log:GET')
+            ->name('transaction.debit');
+        Route::get('credit', \App\Http\Livewire\Feature\Transaction\CreditView::class)
+            ->middleware('log:GET')
+            ->name('transaction.credit');
+        Route::get('index', \App\Http\Livewire\Feature\Transaction\TransactionView::class)
+            ->middleware('log:GET')
+            ->name('transaction.index');
+        Route::get('data', \App\Http\Livewire\Feature\Transaction\TransactionSelectionView::class)
+            ->middleware('log:GET')
+            ->name('transaction.data');
+        Route::get('print/{date}', \App\Http\Livewire\Feature\Transaction\TransactionPrintArea::class)
+            ->middleware('log:GET')
+            ->name('transaction.print');
+        Route::get('show/{transaction_id}', \App\Http\Livewire\Feature\Transaction\TransactionDetailView::class)
+            ->middleware('log:GET')
+            ->name('transaction.show');
+    });
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth.admin'], function(){

@@ -15,6 +15,11 @@ class Transaction extends Model
         'total'
     ];
 
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class);
+    }
+
     public function details()
     {
         return $this->hasMany(TransactionDetail::class);

@@ -14,4 +14,9 @@ class TransactionDetail extends Model
     {
         return $this->belongsTo(Transaction::class);
     }
+
+    public function location()
+    {
+        return $this->belongsTo(ItemLocation::class, 'item_location_id');
+    }
 }

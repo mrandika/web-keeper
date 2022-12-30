@@ -16,10 +16,12 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignId('transaction_type_id');
+            $table->foreignUuid('employee_id');
             $table->integer('total');
             $table->timestamps();
 
             $table->foreign('transaction_type_id')->references('id')->on('transaction_types')->onDelete('cascade');
+            $table->foreign('employee_id')->references('id')->on('employees')->onDelete('cascade');
         });
     }
 
