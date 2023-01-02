@@ -107,6 +107,9 @@ Route::group(['prefix' => 'item'], function () {
         Route::get('new/{item_id}', \App\Http\Livewire\Feature\Item\CreateLocationView::class)
             ->middleware('log:POST')
             ->name('item.location.create');
+        Route::get('edit/{location_id}', \App\Http\Livewire\Feature\Item\EditLocationView::class)
+            ->middleware('log:PUT')
+            ->name('item.location.edit');
     });
 });
 

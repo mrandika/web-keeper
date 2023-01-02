@@ -71,35 +71,28 @@
             <div class="col-lg-4 col-md-4 col-sm-12">
                 <div class="card card-statistic-2">
                     <div class="card-icon shadow-primary bg-primary">
-                        <i class="fas fa-database"></i>
+                        <i class="fas fa-arrow-up"></i>
                     </div>
                     <div class="card-wrap">
                         <div class="card-header">
-                            <h4>Total Penyimpanan</h4>
+                            <h4>Total Kredit - {{ date('M') }} {{ date('Y') }}</h4>
                         </div>
                         <div class="card-body">
-                            {{ $total_storage }} lokasi
+                            @currency($transactions->where('transaction_type_id', 2)->pluck('total')->sum())
                         </div>
                     </div>
                 </div>
-
                 <div class="card card-statistic-2">
                     <div class="card-icon shadow-primary bg-primary">
-                        <i class="fas fa-dollar-sign"></i>
+                        <i class="fas fa-arrow-down"></i>
                     </div>
                     <div class="card-wrap">
                         <div class="card-header">
-                            <h4 class="@if ($transactions->pluck('total')->sum() < 0) beep @endif">Total Transaksi - {{ date('M') }} {{ date('Y') }}</h4>
+                            <h4>Total Debit - {{ date('M') }} {{ date('Y') }}</h4>
                         </div>
                         <div class="card-body">
-                            @currency($transactions->pluck('total')->sum())
+                            @currency($transactions->where('transaction_type_id', 1)->pluck('total')->sum())
                         </div>
-
-                        @if ($transactions->pluck('total')->sum() < 0)
-                        <div class="card-footer text-right">
-                            <div class="badge badge-danger"><i class="fa fa-exclamation mr-2"></i> Transaksi tidak balance</div>
-                        </div>
-                        @endif
                     </div>
                 </div>
             </div>
@@ -111,21 +104,52 @@
                         <h4>Transaksi Pembelian dan Penjualan</h4>
                     </div>
                     <div class="card-body">
-                        <canvas id="myChart" height="158"></canvas>
+                        <canvas id="myChart" height="200"></canvas>
+                        <div class="card card-statistic-2">
+                            <div class="card-icon shadow-primary bg-primary">
+                                <i class="fas fa-money-bill"></i>
+                            </div>
+                            <div class="card-wrap">
+                                <div class="card-header">
+                                    <h4 class="@if ($transactions->pluck('total')->sum() != 0) beep @endif">Neraca Saldo - {{ date('M') }} {{ date('Y') }}</h4>
+                                </div>
+                                <div class="card-body">
+                                    @if ($transactions->pluck('total')->sum() == 0)
+                                        Seimbang
+                                    @else
+                                        @currency($transactions->pluck('total')->sum())
+                                    @endif
+                                </div>
+
+                                @if ($transactions->pluck('total')->sum() != 0)
+                                    <div class="card-footer text-right">
+                                        <div class="badge badge-danger"><i class="fa fa-exclamation mr-2"></i> Transaksi tidak seimbang</div>
+                                        <br>
+                                        <small>
+                                            @if ($transactions->pluck('total')->sum() < 0)
+                                                Debit lebih besar daripada kredit.
+                                            @else
+                                                Kredit lebih besar daripada debit.
+                                            @endif
+                                        </small>
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-4">
-                <div class="card gradient-bottom">
+                <div class="card">
                     <div class="card-header">
-                        <h4>Pembelian Terbanyak</h4>
+                        <h4>Penjualan Terbanyak</h4>
                     </div>
-                    <div class="card-body" id="top-5-scroll" tabindex="2">
+                    <div class="card-body">
                         <ul class="list-unstyled list-unstyled-border">
-                            @foreach ($items as $item)
+                            @foreach ($top_items as $item)
                                 @php
-                                $sold = $item->total_sold;
-                                $item = \App\Models\Item::find($item->item_id);
+                                    $sold = $item->total_sold;
+                                    $item = \App\Models\Item::find($item->item_id);
                                 @endphp
 
                                 <li class="media">
@@ -194,7 +218,6 @@
                             },
                             ticks: {
                                 beginAtZero: true,
-                                stepSize: 25000,
                                 callback: function(value, index, values) {
                                     return 'Rp. ' + value;
                                 }

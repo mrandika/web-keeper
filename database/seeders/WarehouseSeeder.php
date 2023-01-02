@@ -24,5 +24,13 @@ class WarehouseSeeder extends Seeder
             'latitude' => -6.973260519819465,
             'longitude' => 107.63178025110288
         ]);
+
+        Warehouse::create([
+            'user_id' => User::where('email', 'superadmin@keeper.com')->first()->id,
+            'name' => 'Warehouse Telkom',
+            'address' => 'Jalan Telekomunikasi 1',
+            'latitude' => -6.973260519819465,
+            'longitude' => 107.63178025110288
+        ]);
     }
 }

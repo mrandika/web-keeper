@@ -53,13 +53,13 @@
                     <td>{{ $transaction->details->count() }} barang</td>
                     <td>@currency($transaction->total) </td>
                 </tr>
+                @foreach($transaction->details as $item)
                 <tr>
-                    @foreach($transaction->details as $item)
-                        <td></td>
-                        <td colspan="5">{{ $item->location->item->name }}</td>
-                        <td>@currency($item->price) x {{ $item->qty }}</td>
-                    @endforeach
+                    <td></td>
+                    <td colspan="5">{{ $item->location->item->name }}</td>
+                    <td>@currency($item->price) x {{ $item->qty }}</td>
                 </tr>
+                @endforeach
             @empty
                 <tr>
                     <th colspan="7">Tidak ada data</th>

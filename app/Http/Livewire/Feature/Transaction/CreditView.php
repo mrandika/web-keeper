@@ -18,7 +18,7 @@ class CreditView extends Component
 {
     public $item_id = '0', $storage_id = '0', $qty = 0;
     public $locations;
-    public $item;
+    public $selected_item;
     public $cart = [], $total = 0;
 
     /**
@@ -29,15 +29,11 @@ class CreditView extends Component
     public function render()
     {
         $user = Auth::user();
-        $items = Item::with('locations')->whereHas('locations', function ($location_query) use ($user) {
-            $location_query->with('storage')->whereHas('storage', function ($storage_query) use ($user) {
-                $storage_query->with('aisle')->whereHas('aisle', function ($aisle_query) use ($user) {
-                    $aisle_query->with('warehouse')->whereHas('warehouse', function ($wh_query) use ($user) {
-                        $wh_query->where('user_id', $user->id);
-                    });
-                });
-            });
-        })->get();
+        $items = Item::with(['locations.storage.aisle.warehouse'])
+            ->whereHas('locations.storage.aisle.warehouse', function ($query) use ($user) {
+                $query->where('user_id', $user->id);
+            })
+            ->get();
 
         return view('livewire.feature.transaction.credit-view', ['items' => $items])
             ->extends('layouts.dashboard')
@@ -68,6 +64,19 @@ class CreditView extends Component
         $this->qty = 1;
     }
 
+    public function select_item($item_id)
+    {
+        $this->storage_id = '0';
+        $item = Item::findOrFail($item_id);
+
+        if ($item->locations->pluck('stock')->sum() == 0) {
+            session()->flash('sell_error', 'Stock barang tidak tersedia');
+            return;
+        }
+
+        $this->selected_item = $item;
+    }
+
     /**
      * Add the $item_id to cart
      *
@@ -84,6 +93,11 @@ class CreditView extends Component
         $item_idx = in_array($item_id, array_column($this->cart, 'id'));
         $this->item = Item::findOrFail($item_id);
         $total_stock = ItemLocation::where(['item_id' => $item_id, 'warehouse_storage_id' => $this->storage_id])->first()->stock;
+
+        if ($total_stock == 0) {
+            session()->flash('sell_error', 'Stock barang tidak tersedia');
+            return;
+        }
 
         if ($item_idx === false) {
             $this->cart[] = ['id' => $item_id, 'item' => $this->item, 'storage_id' => $this->storage_id, 'max_qty' => $total_stock, 'qty' => $this->qty];

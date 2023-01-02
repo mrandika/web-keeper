@@ -34,5 +34,17 @@ class EmployeeSeeder extends Seeder
             'warehouse_id' => Warehouse::where('name', 'Warehouse Keeper')->first()->id,
             'status' => 1
         ]);
+
+        Employee::create([
+            'user_id' => User::where('email', 'admin@telkom.com')->first()->id,
+            'warehouse_id' => Warehouse::where('name', 'Warehouse Telkom')->first()->id,
+            'status' => 1
+        ]);
+
+        Employee::create([
+            'user_id' => User::where('email', 'employee@telkom.com')->first()->id,
+            'warehouse_id' => Warehouse::where('name', 'Warehouse Telkom')->first()->id,
+            'status' => 1
+        ]);
     }
 }

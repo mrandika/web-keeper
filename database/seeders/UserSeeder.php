@@ -34,5 +34,17 @@ class UserSeeder extends Seeder
             'password' => Hash::make('Supersecret@123'),
             'user_role_id' => UserRole::where('name', 'Employee')->first()->id
         ]);
+
+        User::create([
+            'email' => 'admin@telkom.com',
+            'password' => Hash::make('Supersecret@123'),
+            'user_role_id' => UserRole::where('name', 'Admin')->first()->id
+        ]);
+
+        User::create([
+            'email' => 'employee@telkom.com',
+            'password' => Hash::make('Supersecret@123'),
+            'user_role_id' => UserRole::where('name', 'Employee')->first()->id
+        ]);
     }
 }

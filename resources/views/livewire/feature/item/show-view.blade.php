@@ -72,7 +72,7 @@
                         <div class="card-body">
                             <ul class="list-unstyled list-unstyled-border">
                                 @forelse($item->locations as $location)
-                                    <li class="media">
+                                    <li class="media" wire:click="redirect_page('item.location.edit', '{{ $location->id }}')">
                                         <img class="mr-3 rounded" width="55" src="{{ asset('image/storage.png') }}">
                                         <div class="media-body">
                                             <div class="float-right">

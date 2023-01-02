@@ -21,15 +21,12 @@ class IndexView extends Component
     {
         $user = Auth::user();
 
-        $items = Item::with('locations')->whereHas('locations', function ($location_query) use ($user) {
-            $location_query->with('storage')->whereHas('storage', function ($storage_query) use ($user) {
-                $storage_query->with('aisle')->whereHas('aisle', function ($aisle_query) use ($user) {
-                    $aisle_query->with('warehouse')->whereHas('warehouse', function ($wh_query) use ($user) {
-                        $wh_query->where('user_id', $user->id);
-                    });
-                });
-            });
-        })->where('name', 'like', '%'.$this->search_value.'%')->paginate(10);
+        $items = Item::with(['locations', 'locations.storage', 'locations.storage.aisle', 'locations.storage.aisle.warehouse'])
+            ->whereHas('locations.storage.aisle.warehouse', function ($query) use ($user) {
+                $query->where('user_id', $user->id);
+            })
+            ->where('name', 'like', '%'.$this->search_value.'%')
+            ->paginate(10);
 
         return view('livewire.feature.item.index-view', ['items' => $items])
             ->extends('layouts.dashboard')

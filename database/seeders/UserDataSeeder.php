@@ -36,5 +36,19 @@ class UserDataSeeder extends Seeder
             'last_name' => 'Keeper',
             'phone_number' => '+625647382910'
         ]);
+
+        UserData::create([
+            'user_id' => User::where('email', 'admin@telkom.com')->first()->id,
+            'first_name' => 'Admin',
+            'last_name' => 'Telkom',
+            'phone_number' => '+62987654322'
+        ]);
+
+        UserData::create([
+            'user_id' => User::where('email', 'employee@telkom.com')->first()->id,
+            'first_name' => 'Employee',
+            'last_name' => 'Telkom',
+            'phone_number' => '+625647382911'
+        ]);
     }
 }

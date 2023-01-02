@@ -18,15 +18,19 @@ class ActionLog
      */
     public function handle(Request $request, Closure $next, $action)
     {
-        $date = date('Y-m-d');
-        $user = Auth::user();
+        try {
+            $date = date('Y-m-d');
+            $user = Auth::user();
 
-        $data = '['.date('Y-m-d H:i:s').'] '.$user->id.' '.strtoupper($action).' - '. url()->current();
-        $checksum = encrypt($data);
+            $data = '['.date('Y-m-d H:i:s').'] '.$user->id.' '.strtoupper($action).' - '. url()->current();
+            $checksum = encrypt($data);
 
-        Storage::disk('local')->append('keeper-'.$date.'.log', $data, PHP_EOL);
-        Storage::disk('local')->append('keeper-'.$date.'.hash', $checksum, PHP_EOL);
+            Storage::disk('local')->append('keeper-'.$date.'.log', $data, PHP_EOL);
+            Storage::disk('local')->append('keeper-'.$date.'.hash', $checksum, PHP_EOL);
 
-        return $next($request);
+            return $next($request);
+        } catch (\Exception $e) {
+            return redirect(route('auth.login'))->with('info', 'Sesi anda telah habis, silahkan masuk kembali.');
+        }
     }
 }

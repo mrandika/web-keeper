@@ -78,7 +78,7 @@
                         <div class="card-body">
                             <ul class="list-unstyled list-unstyled-border">
                                 @forelse($items as $item)
-                                    <li class="media" wire:click="redirect_page('warehouse.show', '{{ $item->id }}')">
+                                    <li class="media" wire:click="redirect_page('item.show', '{{ $item->id }}')">
                                         <img class="mr-3 rounded" width="55" src="{{ asset('image/package.png') }}" alt="{{ $item->name }}">
                                         <div class="media-body">
                                             <div class="float-right">

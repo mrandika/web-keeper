@@ -33,25 +33,21 @@ class DashboardView extends Component
         $user = Auth::user();
         $transactions = Transaction::whereMonth('created_at', Carbon::today())->whereYear('created_at', Carbon::today())->get();
         $warehouses = Warehouse::where('user_id', $user->id)->get();
-        $items = Item::with('locations')->whereHas('locations', function ($location_query) use ($user, $warehouses) {
-            $location_query->with('storage')->whereHas('storage', function ($storage_query) use ($warehouses) {
-                $storage_query->with('aisle')->whereHas('aisle', function ($aisle_query) use ($warehouses) {
-                    $aisle_query->with('warehouse')->whereHas('warehouse', function ($wh_query) use ($warehouses) {
-                       $wh_query->whereIn('warehouse_id', $warehouses->pluck('id')->toArray());
-                    });
-                });
-            });
-        })->get();
+        $items = Item::with(['locations', 'locations.storage', 'locations.storage.aisle', 'locations.storage.aisle.warehouse'])
+            ->whereHas('locations.storage.aisle.warehouse', function ($query) use ($warehouses) {
+                $query->whereIn('warehouse_id', $warehouses->pluck('id')->toArray());
+            })
+            ->get();
 
-        $total_asset = 0;
         $total_storage = 0;
 
-        foreach ($items as $item) {
-            foreach ($item->locations as $location) {
-                $total_asset += $item->price * $location->stock;
-                $total_storage += 1;
-            }
-        }
+        $total_asset = Item::with(['locations' => function ($query) {
+            $query->select('id', 'item_id', 'stock');
+        }])->get()->sum(function ($item) {
+            return $item->locations->sum(function ($location) use ($item) {
+                return $location->stock * $item->price;
+            });
+        });
 
         $credit_data = Transaction::select(
             DB::raw('sum(total) as sums'),
@@ -71,9 +67,12 @@ class DashboardView extends Component
             $this->debit_data[$i] = abs($debit_data[$i]);
         }
 
-        $items = TransactionDetail::join('item_locations', 'item_locations.id', '=', 'transaction_details.item_location_id')
-            ->select('item_id', DB::raw('sum(qty) as total_sold'))
-            ->groupBy('item_id')
+        $top_items = TransactionDetail::with(['location.item'])
+            ->join('item_locations', 'item_locations.id', '=', 'transaction_details.item_location_id')
+            ->join('transactions', 'transactions.id', '=', 'transaction_details.transaction_id')
+            ->select('item_locations.item_id', DB::raw('sum(transaction_details.qty) as total_sold'))
+            ->where('transactions.transaction_type_id', 2)
+            ->groupBy('item_locations.item_id')
             ->orderByDesc('total_sold')
             ->take(5)
             ->get();
@@ -84,7 +83,8 @@ class DashboardView extends Component
             'items' => $items,
             'total_asset' => $total_asset,
             'total_storage' => $total_storage,
-            'items' => $items
+            'items' => $items,
+            'top_items' => $top_items
         ])
             ->extends('layouts.dashboard')
             ->section('main');

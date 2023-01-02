@@ -63,5 +63,53 @@ class WarehouseAisleRowSeeder extends Seeder
                 'warehouse_aisle_column_id' => WarehouseAisleColumn::where('code', 'A04-B2')->first()->id
             ]);
         }
+
+        for ($i = 1; $i <= 5; $i++) {
+            WarehouseAisleRow::create([
+                'code' => 'Y01-Z1_A0'.$i,
+                'warehouse_aisle_column_id' => WarehouseAisleColumn::where('code', 'Y01-Z1')->first()->id
+            ]);
+
+            WarehouseAisleRow::create([
+                'code' => 'Y01-Z2_A0'.$i,
+                'warehouse_aisle_column_id' => WarehouseAisleColumn::where('code', 'Y01-Z2')->first()->id
+            ]);
+        }
+
+        for ($i = 1; $i <= 5; $i++) {
+            WarehouseAisleRow::create([
+                'code' => 'Y02-Z1_A0'.$i,
+                'warehouse_aisle_column_id' => WarehouseAisleColumn::where('code', 'Y02-Z1')->first()->id
+            ]);
+
+            WarehouseAisleRow::create([
+                'code' => 'Y02-Z2_A0'.$i,
+                'warehouse_aisle_column_id' => WarehouseAisleColumn::where('code', 'Y02-Z2')->first()->id
+            ]);
+        }
+
+        for ($i = 1; $i <= 5; $i++) {
+            WarehouseAisleRow::create([
+                'code' => 'Y03-Z1_A0'.$i,
+                'warehouse_aisle_column_id' => WarehouseAisleColumn::where('code', 'Y03-Z1')->first()->id
+            ]);
+
+            WarehouseAisleRow::create([
+                'code' => 'Y03-Z2_A0'.$i,
+                'warehouse_aisle_column_id' => WarehouseAisleColumn::where('code', 'Y03-Z2')->first()->id
+            ]);
+        }
+
+        for ($i = 1; $i <= 5; $i++) {
+            WarehouseAisleRow::create([
+                'code' => 'Y04-Z1_A0'.$i,
+                'warehouse_aisle_column_id' => WarehouseAisleColumn::where('code', 'Y04-Z1')->first()->id
+            ]);
+
+            WarehouseAisleRow::create([
+                'code' => 'Y04-Z2_A0'.$i,
+                'warehouse_aisle_column_id' => WarehouseAisleColumn::where('code', 'Y04-Z2')->first()->id
+            ]);
+        }
     }
 }

@@ -35,5 +35,25 @@ class WarehouseAisleSeeder extends Seeder
             'warehouse_id' => Warehouse::where('name', 'Warehouse Keeper')->first()->id,
             'code' => 'KEEPER-A04',
         ]);
+
+        WarehouseAisle::create([
+            'warehouse_id' => Warehouse::where('name', 'Warehouse Telkom')->first()->id,
+            'code' => 'TELKOM-Y01',
+        ]);
+
+        WarehouseAisle::create([
+            'warehouse_id' => Warehouse::where('name', 'Warehouse Telkom')->first()->id,
+            'code' => 'TELKOM-Y02',
+        ]);
+
+        WarehouseAisle::create([
+            'warehouse_id' => Warehouse::where('name', 'Warehouse Telkom')->first()->id,
+            'code' => 'TELKOM-Y03',
+        ]);
+
+        WarehouseAisle::create([
+            'warehouse_id' => Warehouse::where('name', 'Warehouse Telkom')->first()->id,
+            'code' => 'TELKOM-Y04',
+        ]);
     }
 }

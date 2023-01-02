@@ -24,7 +24,7 @@
 
         <div class="section-body">
             <div class="row">
-                <div class="col-lg-8 col-md-12 col-12 col-sm-12">
+                <div class="col-lg-4 col-md-12 col-12 col-sm-12">
                     <div class="card">
                         <div class="card-header">
                             <h4>Data Penjualan</h4>
@@ -85,21 +85,12 @@
                                                     @endif
 
                                                     <br>
-                                                    <button class="btn btn-outline-primary @if($storage_id == null || $storage_id == '0') disabled @endif" wire:click="add_to_cart('{{ $item->id }}')">Tambah</button>
+                                                    <button class="btn btn-outline-primary @if($stock == 0) disabled @endif" wire:click="select_item('{{ $item->id }}')">Pilih</button>
                                                 </div>
                                             </div>
                                             <div class="media-title">{{ $item->name }}</div>
                                             <div class="media-subtitle">SKU: {{ $item->sku }}</div>
                                             <div class="media-subtitle">@currency($item->price)</div>
-                                            <div>
-                                                <label for="inputState">Lokasi Penyimpanan</label>
-                                                <select id="inputState" class="form-control" wire:model="storage_id" wire:change="on_storage_selected">
-                                                    <option value="0" selected disabled>Pilih Lokasi</option>
-                                                    @foreach($item->locations as $location)
-                                                        <option value="{{ $location->warehouse_storage_id }}">{{ $location->storage->row->code }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
                                         </div>
                                     </li>
                                 @empty
@@ -112,6 +103,61 @@
                                 @endforelse
                             </ul>
                         </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-12 col-12 col-sm-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Data Barang</h4>
+                        </div>
+                        <div class="card-body">
+                            @if (isset($selected_item))
+                                <ul class="list-unstyled list-unstyled-border">
+                                    <li class="media">
+                                        <img class="mr-3 rounded" width="55" src="{{ asset('image/package.png') }}" alt="{{ $item->name }}">
+                                        <div class="media-body">
+                                            <div class="float-right">
+                                                <div class="font-weight-600 text-muted text-small">
+                                                    @php
+                                                        $stock = $selected_item->locations->pluck('stock')->sum()
+                                                    @endphp
+
+                                                    Stock: {{ $stock }}
+
+                                                    @if ($stock > 50)
+                                                        <i class="fas fa-circle" style="color: green"></i>
+                                                    @elseif($stock > 25 && $stock <= 50)
+                                                        <i class="fas fa-circle" style="color: orange"></i>
+                                                    @elseif($stock <= 25)
+                                                        <i class="fas fa-circle" style="color: red"></i>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                            <div class="media-title">{{ $selected_item->name }}</div>
+                                            <div class="media-subtitle">SKU: {{ $selected_item->sku }}</div>
+                                            <div class="media-subtitle">@currency($selected_item->price)</div>
+                                        </div>
+                                    </li>
+                                </ul>
+
+                                <div>
+                                    <label for="inputState">Lokasi Penyimpanan</label>
+                                    <select id="inputState" class="form-control" wire:model="storage_id" wire:change="on_storage_selected">
+                                        <option value="0" selected disabled>Pilih Lokasi</option>
+                                        @foreach($selected_item->locations as $location)
+                                            <option value="{{ $location->warehouse_storage_id }}">{{ $location->storage->row->code }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            @endif
+                        </div>
+
+                        @if(isset($selected_item))
+                            <div class="card-header text-right">
+                                <button class="btn btn-primary" wire:click="add_to_cart('{{ $selected_item->id }}')">Tambahkan</button>
+                            </div>
+                        @endif
                     </div>
                 </div>
 

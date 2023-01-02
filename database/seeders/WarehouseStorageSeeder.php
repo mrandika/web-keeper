@@ -29,5 +29,17 @@ class WarehouseStorageSeeder extends Seeder
                 }
             }
         }
+
+        for ($i = 1; $i <= 4; $i++) {
+            for ($j = 1; $j <= 2; $j++) {
+                for ($k = 1; $k <= 5; $k++) {
+                    WarehouseStorage::create([
+                        'warehouse_aisle_id' => WarehouseAisle::where('code', 'TELKOM-Y0'.$i)->first()->id,
+                        'warehouse_aisle_column_id' => WarehouseAisleColumn::where('code', 'Y0'.$i.'-Z'.$j)->first()->id,
+                        'warehouse_aisle_row_id' => WarehouseAisleRow::where('code', 'Y0'.$i.'-Z'.$j.'_A0'.$k)->first()->id
+                    ]);
+                }
+            }
+        }
     }
 }

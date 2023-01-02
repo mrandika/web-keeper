@@ -29,15 +29,11 @@ class DebitView extends Component
     public function render()
     {
         $user = Auth::user();
-        $items = Item::with('locations')->whereHas('locations', function ($location_query) use ($user) {
-            $location_query->with('storage')->whereHas('storage', function ($storage_query) use ($user) {
-                $storage_query->with('aisle')->whereHas('aisle', function ($aisle_query) use ($user) {
-                    $aisle_query->with('warehouse')->whereHas('warehouse', function ($wh_query) use ($user) {
-                        $wh_query->where('user_id', $user->id);
-                    });
-                });
-            });
-        })->get();
+        $items = Item::with(['locations.storage.aisle.warehouse'])
+            ->whereHas('locations.storage.aisle.warehouse', function ($query) use ($user) {
+                $query->where('user_id', $user->id);
+            })
+            ->get();
 
         return view('livewire.feature.transaction.debit-view', ['items' => $items])
             ->extends('layouts.dashboard')
