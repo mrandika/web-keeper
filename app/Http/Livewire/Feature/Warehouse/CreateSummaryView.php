@@ -3,13 +3,14 @@
 namespace App\Http\Livewire\Feature\Warehouse;
 
 use App\Models\Warehouse;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Livewire\Component;
 
 class CreateSummaryView extends Component
 {
-    public $warehouse_id;
+    public $warehouse_id, $warehouse;
     public $long, $lat;
 
     /**
@@ -30,11 +31,16 @@ class CreateSummaryView extends Component
      */
     public function render()
     {
-        $warehouse = Warehouse::findOrFail($this->warehouse_id);
-        $this->long = $warehouse->longitude;
-        $this->lat = $warehouse->latitude;
+        try {
+            $this->warehouse = Warehouse::findOrFail($this->warehouse_id);
+        } catch (ModelNotFoundException $e) {
+            $this->redirect_page('error');
+        }
 
-        return view('livewire.feature.warehouse.create-summary-view', ['warehouse' => $warehouse])
+        $this->long = $this->warehouse->longitude;
+        $this->lat = $this->warehouse->latitude;
+
+        return view('livewire.feature.warehouse.create-summary-view', ['warehouse' => $this->warehouse])
             ->extends('layouts.dashboard')
             ->section('main');
     }

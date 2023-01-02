@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Feature\Item;
 
 use App\Models\Item;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -33,7 +34,11 @@ class EditView extends Component
      */
     public function render()
     {
-        $this->item = Item::findOrFail($this->item_id);
+        try {
+            $this->item = Item::findOrFail($this->item_id);
+        } catch (ModelNotFoundException $e) {
+            $this->redirect_page('error');
+        }
 
         return view('livewire.feature.item.edit-view')
             ->extends('layouts.dashboard')

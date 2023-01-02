@@ -6,6 +6,7 @@ use App\Models\Item;
 use App\Models\ItemLocation;
 use App\Models\Warehouse;
 use App\Models\WarehouseStorage;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
@@ -40,7 +41,12 @@ class CreateLocationView extends Component
     {
         $user = Auth::user();
         $this->warehouses = Warehouse::where('user_id', $user->id)->get();
-        $this->item = Item::findOrFail($this->item_id);
+
+        try {
+            $this->item = Item::findOrFail($this->item_id);
+        } catch (ModelNotFoundException $e) {
+            $this->redirect_page('error');
+        }
 
         return view('livewire.feature.item.create-location-view', ['warehouses' => $this->warehouses, 'item' => $this->item])
             ->extends('layouts.dashboard')

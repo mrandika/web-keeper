@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Feature\Warehouse;
 use App\Models\Item;
 use App\Models\ItemLocation;
 use App\Models\Warehouse;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
@@ -36,7 +37,12 @@ class ShowView extends Component
     {
         $user = Auth::user();
 
-        $this->warehouse = Warehouse::findOrFail($this->warehouse_id);
+        try {
+            $this->warehouse = Warehouse::findOrFail($this->warehouse_id);
+        } catch (ModelNotFoundException $e) {
+            $this->redirect_page('error');
+        }
+
         $items = Item::with('locations')->whereHas('locations', function ($location_query) use ($user) {
             $location_query->with('storage')->whereHas('storage', function ($storage_query) use ($user) {
                 $storage_query->with('aisle')->whereHas('aisle', function ($aisle_query) use ($user) {

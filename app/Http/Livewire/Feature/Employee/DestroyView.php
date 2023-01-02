@@ -3,13 +3,14 @@
 namespace App\Http\Livewire\Feature\Employee;
 
 use App\Models\Employee;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Livewire\Component;
 
 class DestroyView extends Component
 {
-    public $employee_id;
+    public $employee_id, $employee;
 
     /**
      * Mount the Livewire component
@@ -30,9 +31,13 @@ class DestroyView extends Component
      */
     public function render()
     {
-        $employee = Employee::findOrFail($this->employee_id);
+        try {
+            $this->employee = Employee::findOrFail($this->employee_id);
+        } catch (ModelNotFoundException $e) {
+            $this->redirect_page('error');
+        }
 
-        return view('livewire.feature.employee.destroy-view', ['employee' => $employee])
+        return view('livewire.feature.employee.destroy-view', ['employee' => $this->employee])
             ->extends('layouts.dashboard')
             ->section('main');
     }
