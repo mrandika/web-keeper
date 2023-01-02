@@ -16,7 +16,7 @@
                 <a href="{{ route('item.create') }}" class="btn btn-primary">Tambah Baru</a>
             </div>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('superadmin.home') }}">Dashboard</a></div>
+                <div class="breadcrumb-item active"><a href="{{ route('home') }}">Dashboard</a></div>
                 <div class="breadcrumb-item">Item</div>
             </div>
         </div>

@@ -16,7 +16,7 @@
             </div>
             <h1>Konfirmasi Penghapusan Pegawai</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('superadmin.home') }}">Dashboard</a></div>
+                <div class="breadcrumb-item active"><a href="{{ route('home') }}">Dashboard</a></div>
                 <div class="breadcrumb-item"><a href="{{ route('employee.index') }}">Employee</a></div>
                 <div class="breadcrumb-item"><a href="{{ route('employee.show', $employee_id) }}">{{ $employee->user->data->fullname() }}</a></div>
                 <div class="breadcrumb-item">Hapus</div>

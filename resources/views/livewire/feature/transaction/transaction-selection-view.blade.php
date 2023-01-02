@@ -20,7 +20,7 @@
             </div>
             <h1>Pilih Transaksi</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('superadmin.home') }}">Dashboard</a></div>
+                <div class="breadcrumb-item active"><a href="{{ route('home') }}">Dashboard</a></div>
                 <div class="breadcrumb-item"><a href="{{ route('transaction.index') }}">Transaksi</a></div>
                 <div class="breadcrumb-item">Data Transaksi</div>
             </div>
