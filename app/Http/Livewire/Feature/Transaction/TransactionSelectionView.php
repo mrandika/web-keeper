@@ -63,7 +63,7 @@ class TransactionSelectionView extends Component
         $pdf = Pdf::loadView('livewire/feature/transaction/transaction-print-area', ['transactions' => $this->transactions])->output();
 
         return response()->streamDownload(
-            fn () => print($pdf), "filename.pdf"
+            fn () => print($pdf), "Laporan Transaksi Keeper ($this->date).pdf"
         );
     }
 }

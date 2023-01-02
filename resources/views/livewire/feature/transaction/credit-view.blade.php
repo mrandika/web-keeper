@@ -90,7 +90,7 @@
                                             </div>
                                             <div class="media-title">{{ $item->name }}</div>
                                             <div class="media-subtitle">SKU: {{ $item->sku }}</div>
-                                            <div class="media-subtitle">Rp. {{ $item->price }}</div>
+                                            <div class="media-subtitle">@currency($item->price)</div>
                                             <div>
                                                 <label for="inputState">Lokasi Penyimpanan</label>
                                                 <select id="inputState" class="form-control" wire:model="storage_id" wire:change="on_storage_selected">
@@ -126,9 +126,9 @@
                                     <li class="media">
                                         <img class="mr-3 rounded-circle" width="50" src="{{ asset('image/package.png') }}" alt="avatar">
                                         <div class="media-body">
-                                            <div class="float-right text-primary">@ Rp. {{ $item['item']['price'] }}</div>
+                                            <div class="float-right text-primary">@ @currency($item['item']['price'])</div>
                                             <div class="media-title">{{ $item['item']['name'] }}</div>
-                                            <span class="text-small">{{ $item['qty'] }}x,  Rp. {{ $item['item']['price'] * $item['qty'] }}</span>
+                                            <span class="text-small">{{ $item['qty'] }}x,  @currency($item['item']['price'] * $item['qty'])</span>
 
                                             <div class="text-right">
                                                 <button class="btn btn-sm btn-outline-primary" wire:click="qty('add', '{{ $item['item']['id'] }}')">+ Tambah</button>

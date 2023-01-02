@@ -54,7 +54,7 @@
                                         </div>
                                         <div class="media-title">{{ $item->name }}</div>
                                         <div class="media-subtitle">SKU: {{ $item->sku }}</div>
-                                        <div class="media-subtitle">Rp. {{ $item->price }}</div>
+                                        <div class="media-subtitle">@currency($item->price)</div>
                                     </div>
                                 </li>
                             </ul>

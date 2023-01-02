@@ -62,9 +62,9 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $item->location->item->name }}</td>
-                                            <td class="text-center">Rp. {{ $item->price }}</td>
+                                            <td class="text-center">@currency($item->price)</td>
                                             <td class="text-center">{{ $item->qty }}</td>
-                                            <td class="text-right">Rp. {{ $item->price * $item->qty }}</td>
+                                            <td class="text-right">@currency($item->price * $item->qty)</td>
                                         </tr>
                                     @endforeach
                                 </table>
@@ -73,7 +73,7 @@
                                 <div class="col-lg-12 text-right">
                                     <div class="invoice-detail-item">
                                         <div class="invoice-detail-name">Total</div>
-                                        <div class="invoice-detail-value invoice-detail-value-lg">Rp. {{ $transaction->total }}</div>
+                                        <div class="invoice-detail-value invoice-detail-value-lg">@currency($transaction->total)</div>
                                     </div>
                                 </div>
                             </div>

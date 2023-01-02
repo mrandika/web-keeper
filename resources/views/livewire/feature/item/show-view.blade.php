@@ -46,7 +46,7 @@
                                 <div class="profile-widget-item">
                                     <div class="profile-widget-item-label">Harga</div>
                                     <div class="profile-widget-item-value">
-                                        Rp. {{ $item->price }}
+                                        @currency($item->price)
                                     </div>
                                 </div>
                             </div>

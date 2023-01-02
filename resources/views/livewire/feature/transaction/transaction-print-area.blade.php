@@ -51,13 +51,13 @@
                     <td>{{ $transaction->created_at->format('H:m:s') }}</td>
                     <td>{{ $transaction->employee->user->data->fullname() }}</td>
                     <td>{{ $transaction->details->count() }} barang</td>
-                    <td>Rp. {{ $transaction->total }}</td>
+                    <td>@currency($transaction->total) </td>
                 </tr>
                 <tr>
                     @foreach($transaction->details as $item)
                         <td></td>
                         <td colspan="5">{{ $item->location->item->name }}</td>
-                        <td>Rp. {{ $item->price }} x {{ $item->qty }}</td>
+                        <td>@currency($item->price) x {{ $item->qty }}</td>
                     @endforeach
                 </tr>
             @empty
@@ -69,7 +69,7 @@
             @if ($transactions != null)
                 <tr>
                     <td colspan="6"></td>
-                    <th>Rp. {{ $total }}</th>
+                    <th>@currency($total)</th>
                 </tr>
             @endif
             </tbody>

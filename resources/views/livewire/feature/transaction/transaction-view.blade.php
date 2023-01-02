@@ -59,7 +59,7 @@
                                         <th>Tanggal</th>
                                         <th>Aksi</th>
                                     </tr>
-                                    @foreach($transactions as $transaction)
+                                    @foreach($transactions->sortByDesc('created_at') as $transaction)
                                         <tr>
                                             <td>
                                                 @if($transaction->transaction_type_id == 1)
@@ -73,7 +73,7 @@
                                                 <div class="d-inline-block ml-1">{{ $transaction->employee->user->data->fullname() }}</div>
                                             </td>
                                             <td>{{ $transaction->details->count() }} item</td>
-                                            <td>Rp. {{ $transaction->total }}</td>
+                                            <td>@currency($transaction->total)</td>
                                             <td>{{ $transaction->created_at }}</td>
                                             <td>
                                                 <a class="btn btn-primary" href="{{ route('transaction.show', $transaction->id) }}">Detail</a>

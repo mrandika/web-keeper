@@ -101,7 +101,7 @@
                                         </td>
                                         <td>{{ $transaction->employee->user->data->fullname() }} ({{ $transaction->employee->user->email }})</td>
                                         <td>{{ $transaction->details->count() }} barang</td>
-                                        <td>Rp. {{ $transaction->total }}</td>
+                                        <td>@currency($transaction->total)</td>
                                     </tr>
                                 @empty
                                     <tr>
@@ -112,7 +112,7 @@
                                 @if ($transactions != null)
                                     <tr>
                                         <td colspan="4"></td>
-                                        <th>Rp. {{ $total }}</th>
+                                        <th>@currency($total)</th>
                                     </tr>
                                 @endif
                                 </tbody>
@@ -134,13 +134,16 @@
 @section('js')
     <script src="{{ asset('js/daterangepicker.js') }}"></script>
     <script>
-        $('.daterange-cus').daterangepicker({
-            locale: {format: 'DD-MM-YYYY'},
-            drops: 'down',
-            opens: 'down'
-        });
-        $('.daterange-cus').on('change', function (e) {
+        $(document).on('livewire:load', function () {
+            $('.daterange-cus').daterangepicker({
+                locale: {format: 'DD-MM-YYYY'},
+                drops: 'down',
+                opens: 'down'
+            });
+
+            $('.daterange-cus').on('change', function (e) {
             @this.set('date', e.target.value);
+            });
         });
     </script>
 @endsection
