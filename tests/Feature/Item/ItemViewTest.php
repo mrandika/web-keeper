@@ -22,7 +22,7 @@ class ItemViewTest extends TestCase
             ->assertSuccessful()
             ->assertSeeLivewire('feature.item.index-view');
 
-        $this->get(route('item.show', Item::where('name', 'Product A')->first()->id))
+        $this->get(route('item.show', Item::first()->id))
             ->assertSuccessful()
             ->assertSeeLivewire('feature.item.show-view');
     }
@@ -48,11 +48,11 @@ class ItemViewTest extends TestCase
     {
         $this->actingAs(User::where('email', 'superadmin@keeper.com')->first());
 
-        $this->get(route('item.destroy', Item::where('name', 'Product A')->first()->id))
+        $this->get(route('item.destroy', Item::first()->id))
             ->assertSuccessful()
             ->assertSeeLivewire('feature.item.destroy-view');
 
-        $this->get(route('item.edit', Item::where('name', 'Product A')->first()->id))
+        $this->get(route('item.edit', Item::first()->id))
             ->assertSuccessful()
             ->assertSeeLivewire('feature.item.edit-view');
     }
