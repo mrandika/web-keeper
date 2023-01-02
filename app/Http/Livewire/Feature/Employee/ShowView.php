@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Feature\Employee;
 
 use App\Models\Employee;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -31,7 +32,11 @@ class ShowView extends Component
      */
     public function render()
     {
-        $this->employee = Employee::findOrFail($this->employee_id);
+        try {
+            $this->employee = Employee::findOrFail($this->employee_id);
+        } catch (ModelNotFoundException $e) {
+            $this->redirect_page('error');
+        }
 
         return view('livewire.feature.employee.show-view', ['employee' => $this->employee])
             ->extends('layouts.dashboard')

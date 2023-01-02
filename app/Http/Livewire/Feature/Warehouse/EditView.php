@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Feature\Warehouse;
 
 use App\Models\Warehouse;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -31,7 +32,12 @@ class EditView extends Component
      */
     public function render()
     {
-        $this->warehouse = Warehouse::findOrFail($this->warehouse_id);
+        try {
+            $this->warehouse = Warehouse::findOrFail($this->warehouse_id);
+        } catch (ModelNotFoundException $e) {
+            $this->redirect_page('error');
+        }
+
         return view('livewire.feature.warehouse.edit-view', ['warehouse' => $this->warehouse])
             ->extends('layouts.dashboard')
             ->section('main');

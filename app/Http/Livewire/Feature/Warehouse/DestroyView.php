@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Feature\Warehouse;
 
 use App\Models\Warehouse;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
@@ -32,7 +33,12 @@ class DestroyView extends Component
     public function render()
     {
         $warehouse_counts = Warehouse::where('user_id', Auth::user()->id)->count();
-        $this->warehouse = Warehouse::findOrFail($this->warehouse_id);
+
+        try {
+            $this->warehouse = Warehouse::findOrFail($this->warehouse_id);
+        } catch (ModelNotFoundException $e) {
+            $this->redirect_page('error');
+        }
 
         return view('livewire.feature.warehouse.destroy-view', ['warehouse' => $this->warehouse, 'count' => $warehouse_counts])
             ->extends('layouts.dashboard')

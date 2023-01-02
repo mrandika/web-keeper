@@ -3,12 +3,13 @@
 namespace App\Http\Livewire\Feature\Transaction;
 
 use App\Models\Transaction;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\View\View;
 use Livewire\Component;
 
 class TransactionDetailView extends Component
 {
-    public $transaction_id;
+    public $transaction_id, $transaction;
 
     /**
      * Mount the Livewire component
@@ -28,9 +29,13 @@ class TransactionDetailView extends Component
      */
     public function render()
     {
-        $transaction = Transaction::findOrFail($this->transaction_id);
+        try {
+            $this->transaction = Transaction::findOrFail($this->transaction_id);
+        } catch (ModelNotFoundException $e) {
+            $this->redirect_page('error');
+        }
 
-        return view('livewire.feature.transaction.transaction-detail-view', ['transaction' => $transaction])
+        return view('livewire.feature.transaction.transaction-detail-view', ['transaction' => $this->transaction])
             ->extends('layouts.dashboard')
             ->section('main');
     }
