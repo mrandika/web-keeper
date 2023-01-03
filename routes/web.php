@@ -110,6 +110,9 @@ Route::group(['prefix' => 'item'], function () {
         Route::get('edit/{location_id}', \App\Http\Livewire\Feature\Item\EditLocationView::class)
             ->middleware('log:PUT')
             ->name('item.location.edit');
+        Route::get('destroy/{location_id}', \App\Http\Livewire\Feature\Item\EditLocationView::class)
+            ->middleware('log:DELETE')
+            ->name('item.location.destroy');
     });
 });
 
