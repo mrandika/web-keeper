@@ -51,9 +51,6 @@
         </div>
 
         <div class="form-group text-right">
-            <a href="#" wire:click="redirect_page('auth.reset-password')" class="float-left mt-3">
-                Lupa Kata Sandi?
-            </a>
             <button type="submit" class="btn btn-primary btn-lg btn-icon icon-right" wire:loading.class="btn-progress" tabindex="4">
                 Masuk
             </button>
