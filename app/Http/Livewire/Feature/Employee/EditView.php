@@ -49,7 +49,11 @@ class EditView extends Component
             $this->redirect_page('error');
         }
 
-        $warehouses = Warehouse::where('user_id', $user->id)->get();
+        if ($user->role->name == 'Super-Admin') {
+            $warehouses = Warehouse::where('user_id', $user->id)->get();
+        } else {
+            $warehouses = Warehouse::whereIn('id', $user->employees->pluck('warehouse_id')->toArray())->get();
+        }
 
         return view('livewire.feature.employee.edit-view', ['employee' => $this->employee, 'warehouses' => $warehouses])
             ->extends('layouts.dashboard')

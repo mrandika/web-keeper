@@ -57,7 +57,9 @@ class CreateView extends Component
     {
         $this->validate();
 
-        $this->warehouse['user_id'] = Auth::user()->id;
+        $user = Auth::user();
+
+        $this->warehouse['user_id'] = $user->id;
         $warehouse = Warehouse::create($this->warehouse);
 
         $this->redirect_page('warehouse.create.storage', $warehouse->id);

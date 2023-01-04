@@ -2,7 +2,7 @@
     Transaction
 @endsection
 
-@extends('layouts.sidebar.admin-nav')
+@extends('layouts.sidebar')
 
 @section('transaction-active')
     active
@@ -24,13 +24,16 @@
                         <div class="card-body">
                             <ul class="nav nav-pills">
                                 <li class="nav-item">
-                                    <a class="nav-link active">Semua <span class="badge badge-white">{{ $transactions->count() }}</span></a>
+                                    <a class="nav-link active">Semua <span
+                                            class="badge badge-white">{{ $transactions->count() }}</span></a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link">Pembelian <span class="badge badge-primary">{{ $transactions->where('transaction_type_id', 1)->count() }}</span></a>
+                                    <a class="nav-link">Pembelian <span
+                                            class="badge badge-primary">{{ $transactions->where('transaction_type_id', 1)->count() }}</span></a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link">Penjualan <span class="badge badge-primary">{{ $transactions->where('transaction_type_id', 2)->count() }}</span></a>
+                                    <a class="nav-link">Penjualan <span
+                                            class="badge badge-primary">{{ $transactions->where('transaction_type_id', 2)->count() }}</span></a>
                                 </li>
                             </ul>
                         </div>
@@ -43,7 +46,8 @@
                         <div class="card-header">
                             <h4>Data Transaksi</h4>
                             <div class="card-header-action">
-                                <a class="btn btn-warning btn-icon icon-left" href="{{ route('transaction.data') }}"><i class="fas fa-print"></i> Print</a>
+                                <a class="btn btn-warning btn-icon icon-left" href="{{ route('transaction.data') }}"><i
+                                        class="fas fa-print"></i> Print</a>
                             </div>
                         </div>
                         <div class="card-body">
@@ -69,14 +73,17 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <img alt="image" src="{{ asset('image/avatar-1.png') }}" class="rounded-circle" width="35" data-toggle="title" title="">
-                                                <div class="d-inline-block ml-1">{{ $transaction->employee->user->data->fullname() }}</div>
+                                                <img alt="image" src="{{ asset('image/avatar-1.png') }}"
+                                                     class="rounded-circle" width="35" data-toggle="title" title="">
+                                                <div
+                                                    class="d-inline-block ml-1">{{ $transaction->employee->user->data->fullname() }}</div>
                                             </td>
                                             <td>{{ $transaction->details->count() }} item</td>
                                             <td>@currency($transaction->total)</td>
                                             <td>{{ $transaction->created_at }}</td>
                                             <td>
-                                                <a class="btn btn-primary" href="{{ route('transaction.show', $transaction->id) }}">Detail</a>
+                                                <a class="btn btn-primary"
+                                                   href="{{ route('transaction.show', $transaction->id) }}">Detail</a>
                                             </td>
                                         </tr>
                                     @endforeach

@@ -9,6 +9,7 @@ use App\Models\ItemLocation;
 use App\Models\Transaction;
 use App\Models\TransactionDetail;
 use App\Models\TransactionType;
+use App\Models\WarehouseStorage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
@@ -29,25 +30,28 @@ class DebitView extends Component
     public function render()
     {
         $user = Auth::user();
+
         $items = Item::with(['locations.storage.aisle.warehouse'])
             ->whereHas('locations.storage.aisle.warehouse', function ($query) use ($user) {
-                $query->where('user_id', $user->id);
+                if ($user->role->name == 'Super-Admin') {
+                    $query->where('user_id', $user->id);
+                } else {
+                    $query->whereIn('id', $user->employees->pluck('warehouse_id')->toArray());
+                }
             })
             ->get();
+
+        $this->locations = WarehouseStorage::with('aisle.warehouse')->whereHas('aisle.warehouse', function ($query) use ($user) {
+            if ($user->role->name == 'Super-Admin') {
+                $query->where('user_id', $user->id);
+            } else {
+                $query->whereIn('id', $user->employees->pluck('warehouse_id')->toArray());
+            }
+        })->get();
 
         return view('livewire.feature.transaction.debit-view', ['items' => $items])
             ->extends('layouts.dashboard')
             ->section('main');
-    }
-
-    /**
-     * Get the item locations after the items is selected
-     *
-     * @return void
-     */
-    public function on_item_selected()
-    {
-        $this->locations = ItemLocation::where('item_id', $this->item_id)->get();
     }
 
     /**
@@ -83,7 +87,6 @@ class DebitView extends Component
     {
         $item_idx = in_array($this->item_id, array_column($this->cart, 'id'));
         $this->item = Item::findOrFail($this->item_id);
-        $total_stock = ItemLocation::where(['item_id' => $this->item_id, 'warehouse_storage_id' => $this->storage_id])->first()->stock;
 
         if ($this->qty < 1) {
             session()->flash('buy_error', 'Jumlah pembelian harus diatas atau sama dengan 1');
@@ -91,7 +94,7 @@ class DebitView extends Component
         }
 
         if ($item_idx === false) {
-            $this->cart[] = ['id' => $this->item_id, 'item' => $this->item, 'storage_id' => $this->storage_id, 'max_qty' => $total_stock, 'qty' => $this->qty];
+            $this->cart[] = ['id' => $this->item_id, 'item' => $this->item, 'storage_id' => $this->storage_id, 'qty' => $this->qty];
         } else {
             $this->qty('add', $this->item_id, $this->qty);
         }
@@ -147,7 +150,7 @@ class DebitView extends Component
 
                 foreach ($this->cart as $item) {
                     $detail = new TransactionDetail();
-                    $item_location = ItemLocation::where(['item_id' => $item['id'], 'warehouse_storage_id' => $item['storage_id']])->first();
+                    $item_location = ItemLocation::firstOrCreate(['item_id' => $item['id'], 'warehouse_storage_id' => $item['storage_id']], ['item_id' => $item['id'], 'warehouse_storage_id' => $item['storage_id'], 'stock' => 0]);
                     $item_location->stock += $item['qty'];
 
                     $detail->transaction_id = $transaction->id;

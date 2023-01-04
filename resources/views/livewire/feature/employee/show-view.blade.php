@@ -2,7 +2,7 @@
     {{ $employee->user->data->fullname() }}
 @endsection
 
-@extends('layouts.sidebar.admin-nav')
+@extends('layouts.sidebar')
 
 @section('employee-active')
     active
@@ -27,25 +27,34 @@
                 <div class="col-12 col-md-12 col-lg-5">
                     <div class="card profile-widget">
                         <div class="profile-widget-header">
-                            <img alt="image" src="{{ asset('image/avatar-1.png') }}" class="rounded-circle profile-widget-picture">
+                            <img alt="image" src="{{ asset('image/avatar-1.png') }}"
+                                 class="rounded-circle profile-widget-picture">
                             <div class="profile-widget-items">
                                 <div class="profile-widget-item">
                                     <div class="profile-widget-item-label">Status</div>
                                     <div class="profile-widget-item-value">
-                                        <span class="badge badge-{{ $employee->status ? 'primary' : 'warning' }}">{{ $employee->status ? 'Aktif' : 'Tidak Aktif' }}</span>
+                                        <span
+                                            class="badge badge-{{ $employee->status ? 'primary' : 'warning' }}">{{ $employee->status ? 'Aktif' : 'Tidak Aktif' }}</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="profile-widget-description">
-                            <div class="profile-widget-name">{{ $employee->user->data->fullname() }} <div class="text-muted d-inline font-weight-normal"><div class="slash"></div>
-                                    {{ $employee->warehouse->name }}</div></div>
+                            <div class="profile-widget-name">{{ $employee->user->data->fullname() }}
+                                <div class="text-muted d-inline font-weight-normal">
+                                    <div class="slash"></div>
+                                    {{ $employee->warehouse->name }}</div>
+                            </div>
 
                             {{ $employee->user->email }} ({{ $employee->user->data->phone_number }})
 
                             <div class="text-right mt-4">
-                                <button class="btn btn-danger" wire:click="redirect_page('employee.destroy', '{{ $employee->id }}')">Hapus</button>
-                                <button class="btn btn-warning" wire:click="redirect_page('employee.edit', '{{ $employee->id }}')">Perbarui</button>
+                                <button class="btn btn-danger"
+                                        wire:click="redirect_page('employee.destroy', '{{ $employee->id }}')">Hapus
+                                </button>
+                                <button class="btn btn-warning"
+                                        wire:click="redirect_page('employee.edit', '{{ $employee->id }}')">Perbarui
+                                </button>
                             </div>
                         </div>
                     </div>

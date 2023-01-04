@@ -2,7 +2,7 @@
     Warehouse
 @endsection
 
-@extends('layouts.sidebar.admin-nav')
+@extends('layouts.sidebar')
 
 @section('employee-active')
     active
@@ -28,7 +28,8 @@
                         <div class="card-body">
                             <ul class="nav nav-pills">
                                 <li class="nav-item">
-                                    <a class="nav-link active" href="#">Semua <span class="badge badge-white">{{ $employees->count() }}</span></a>
+                                    <a class="nav-link active" href="#">Semua <span
+                                            class="badge badge-white">{{ $employees->count() }}</span></a>
                                 </li>
                             </ul>
                         </div>
@@ -66,7 +67,8 @@
                         <div class="card-body">
                             <div class="float-right">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Search" wire:model.debounce.500ms="search_value">
+                                    <input type="text" class="form-control" placeholder="Search"
+                                           wire:model.debounce.500ms="search_value">
                                     <div class="input-group-append">
                                         <button class="btn btn-primary"><i class="fas fa-search"></i></button>
                                     </div>
@@ -77,10 +79,15 @@
 
                             <ul class="list-unstyled list-unstyled-border">
                                 @forelse($employees as $employee)
-                                    <li class="media" wire:click="redirect_page('employee.show', '{{ $employee->id }}')">
-                                        <img class="mr-3 rounded" width="55" src="{{ asset('image/avatar-1.png') }}" alt="{{ $employee->user->data->fullname() }}">
+                                    <li class="media"
+                                        wire:click="redirect_page('employee.show', '{{ $employee->id }}')">
+                                        <img class="mr-3 rounded" width="55" src="{{ asset('image/avatar-1.png') }}"
+                                             alt="{{ $employee->user->data->fullname() }}">
                                         <div class="media-body">
-                                            <div class="float-right"><div class="font-weight-600 text-muted text-small">{{ $employee->user->email }}</div></div>
+                                            <div class="float-right">
+                                                <div
+                                                    class="font-weight-600 text-muted text-small">{{ $employee->user->email }}</div>
+                                            </div>
                                             <div class="media-title">{{ $employee->user->data->fullname() }}</div>
                                             <div class="media-subtitle">{{ $employee->warehouse->name }}</div>
                                         </div>

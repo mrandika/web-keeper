@@ -2,7 +2,7 @@
     Update Item
 @endsection
 
-@extends('layouts.sidebar.admin-nav')
+@extends('layouts.sidebar')
 
 @section('item-active')
     active
@@ -35,7 +35,8 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="inputEmail4">Nama Barang</label>
-                                    <input type="text" class="form-control @error('name') is-invalid @enderror" placeholder="Nama Barang" wire:model="name">
+                                    <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                           placeholder="Nama Barang" wire:model="name">
 
                                     @error('name')
                                     <span class="text-danger">{{ $message }}</span>
@@ -43,7 +44,8 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="inputPassword4">SKU</label>
-                                    <input type="text" class="form-control @error('sku') is-invalid @enderror" placeholder="Stock Keeping Unit" wire:model="sku">
+                                    <input type="text" class="form-control @error('sku') is-invalid @enderror"
+                                           placeholder="Stock Keeping Unit" wire:model="sku">
 
                                     @error('sku')
                                     <span class="text-danger">{{ $message }}</span>
@@ -53,7 +55,8 @@
 
                             <div class="form-group">
                                 <label for="inputPassword4">Harga</label>
-                                <input type="number" class="form-control @error('price') is-invalid @enderror" placeholder="Harga Barang" wire:model="price">
+                                <input type="number" class="form-control @error('price') is-invalid @enderror"
+                                       placeholder="Harga Barang" wire:model="price">
 
                                 @error('price')
                                 <span class="text-danger">{{ $message }}</span>

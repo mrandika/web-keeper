@@ -1,5 +1,5 @@
 @section('page')
-{{ $warehouse->name }}
+    {{ $warehouse->name }}
 @endsection
 
 @section('js-head')
@@ -7,7 +7,7 @@
     <script src="{{ asset('js/gmaps.js') }}"></script>
 @endsection
 
-@extends('layouts.sidebar.admin-nav')
+@extends('layouts.sidebar')
 
 @section('warehouse-active')
     active
@@ -32,11 +32,13 @@
                 <div class="col-12 col-md-12 col-lg-5">
                     <div class="card profile-widget">
                         <div class="profile-widget-header">
-                            <img alt="image" src="{{ asset('image/warehouse.png') }}" class="rounded-circle profile-widget-picture">
+                            <img alt="image" src="{{ asset('image/warehouse.png') }}"
+                                 class="rounded-circle profile-widget-picture">
                             <div class="profile-widget-items">
                                 <div class="profile-widget-item">
                                     <div class="profile-widget-item-label">Penyimpanan</div>
-                                    <div class="profile-widget-item-value">{{ $warehouse->storages->count() }} slot</div>
+                                    <div class="profile-widget-item-value">{{ $warehouse->storages->count() }}slot
+                                    </div>
                                 </div>
                                 <div class="profile-widget-item">
                                     <div class="profile-widget-item-label">Pegawai</div>
@@ -49,14 +51,24 @@
                             </div>
                         </div>
                         <div class="profile-widget-description">
-                            <div class="profile-widget-name">{{ $warehouse->name }} <div class="text-muted d-inline font-weight-normal"><div class="slash"></div>
-                                {{ $warehouse->user->data->fullname() }}</div></div>
+                            <div class="profile-widget-name">{{ $warehouse->name }}
+                                <div class="text-muted d-inline font-weight-normal">
+                                    <div class="slash"></div>
+                                    {{ $warehouse->user->data->fullname() }}</div>
+                            </div>
 
                             {{ $warehouse->address }}
 
                             <div class="text-right mt-4">
-                                <button class="btn btn-danger" wire:click="redirect_page('warehouse.destroy', '{{ $warehouse->id }}')">Hapus</button>
-                                <button class="btn btn-warning" wire:click="redirect_page('warehouse.edit', '{{ $warehouse->id }}')">Perbarui</button>
+                                @if (auth()->user()->role->name == 'Super-Admin')
+                                    <button class="btn btn-danger"
+                                            wire:click="redirect_page('warehouse.destroy', '{{ $warehouse->id }}')">
+                                        Hapus
+                                    </button>
+                                @endif
+                                <button class="btn btn-warning"
+                                        wire:click="redirect_page('warehouse.edit', '{{ $warehouse->id }}')">Perbarui
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -78,8 +90,10 @@
                         <div class="card-body">
                             <ul class="list-unstyled list-unstyled-border">
                                 @forelse($items as $item)
-                                    <li class="media" wire:click="redirect_page('item.show', '{{ $item->id }}')">
-                                        <img class="mr-3 rounded" width="55" src="{{ asset('image/package.png') }}" alt="{{ $item->name }}">
+                                    <li class="media"
+                                        @if (auth()->user()->role->name == 'Super-Admin' || auth()->user()->role->name == 'Employee') wire:click="redirect_page('item.show', '{{ $item->id }}')" @endif>
+                                        <img class="mr-3 rounded" width="55" src="{{ asset('image/package.png') }}"
+                                             alt="{{ $item->name }}">
                                         <div class="media-body">
                                             <div class="float-right">
                                                 <div class="font-weight-600 text-muted text-small">
@@ -105,10 +119,11 @@
                                     </li>
                                 @empty
                                     @livewire('component.state.unknown-state', [
-                                        'title' => 'Tidak ada barang di warehouse ini',
-                                        'subtitle' => 'Warehouse ini belum mempunyai barang, klik tombol dibawah untuk memulai membuat barang.',
-                                        'primary_button_dest' => route('warehouse.create'),
-                                        'primary_button_text' => 'Buat Baru'
+                                    'title' => 'Tidak ada barang di warehouse ini',
+                                    'subtitle' => 'Warehouse ini belum mempunyai barang, klik tombol dibawah untuk
+                                    memulai membuat barang.',
+                                    'primary_button_dest' => route('warehouse.create'),
+                                    'primary_button_text' => 'Buat Baru'
                                     ])
                                 @endforelse
                             </ul>

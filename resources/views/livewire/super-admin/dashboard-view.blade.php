@@ -2,7 +2,7 @@
     Beranda
 @endsection
 
-@extends('layouts.sidebar.admin-nav')
+@extends('layouts.sidebar')
 
 @section('dashboard-active')
     active
@@ -17,11 +17,13 @@
                         <div class="card-stats-title">Statistik Transaksi - {{ date('M') }} {{ date('Y') }}</div>
                         <div class="card-stats-items">
                             <div class="card-stats-item">
-                                <div class="card-stats-item-count">{{ $transactions->where('transaction_type_id', 2)->count() }}</div>
+                                <div
+                                    class="card-stats-item-count">{{ $transactions->where('transaction_type_id', 2)->count() }}</div>
                                 <div class="card-stats-item-label">Penjualan</div>
                             </div>
                             <div class="card-stats-item">
-                                <div class="card-stats-item-count">{{ $transactions->where('transaction_type_id', 1)->count() }}</div>
+                                <div
+                                    class="card-stats-item-count">{{ $transactions->where('transaction_type_id', 1)->count() }}</div>
                                 <div class="card-stats-item-label">Pembelian</div>
                             </div>
                         </div>
@@ -111,7 +113,8 @@
                             </div>
                             <div class="card-wrap">
                                 <div class="card-header">
-                                    <h4 class="@if ($transactions->pluck('total')->sum() != 0) beep @endif">Neraca Saldo - {{ date('M') }} {{ date('Y') }}</h4>
+                                    <h4 class="@if ($transactions->pluck('total')->sum() != 0) beep @endif">Neraca Saldo
+                                        - {{ date('M') }} {{ date('Y') }}</h4>
                                 </div>
                                 <div class="card-body">
                                     @if ($transactions->pluck('total')->sum() == 0)
@@ -123,7 +126,9 @@
 
                                 @if ($transactions->pluck('total')->sum() != 0)
                                     <div class="card-footer text-right">
-                                        <div class="badge badge-danger"><i class="fa fa-exclamation mr-2"></i> Transaksi tidak seimbang</div>
+                                        <div class="badge badge-danger"><i class="fa fa-exclamation mr-2"></i> Transaksi
+                                            tidak seimbang
+                                        </div>
                                         <br>
                                         <small>
                                             @if ($transactions->pluck('total')->sum() < 0)
@@ -153,9 +158,13 @@
                                 @endphp
 
                                 <li class="media">
-                                    <img class="mr-3 rounded" width="55" src="{{ asset('image/package.png') }}" alt="{{ $item->name }}">
+                                    <img class="mr-3 rounded" width="55" src="{{ asset('image/package.png') }}"
+                                         alt="{{ $item->name }}">
                                     <div class="media-body">
-                                        <div class="float-right"><div class="font-weight-600 text-muted text-small">{{ $sold }} Penjualan</div></div>
+                                        <div class="float-right">
+                                            <div class="font-weight-600 text-muted text-small">{{ $sold }}Penjualan
+                                            </div>
+                                        </div>
                                         <div class="media-title">{{ $item->name }}</div>
                                         <div class="mt-1">
                                             @currency($item->price)
@@ -199,7 +208,7 @@
                             backgroundColor: 'rgba(254,86,83,.7)',
                             borderWidth: 0,
                             borderColor: 'transparent',
-                            pointBorderWidth: 0 ,
+                            pointBorderWidth: 0,
                             pointRadius: 3.5,
                             pointBackgroundColor: 'transparent',
                             pointHoverBackgroundColor: 'rgba(254,86,83,.8)',
@@ -218,7 +227,7 @@
                             },
                             ticks: {
                                 beginAtZero: true,
-                                callback: function(value, index, values) {
+                                callback: function (value, index, values) {
                                     return 'Rp. ' + value;
                                 }
                             }

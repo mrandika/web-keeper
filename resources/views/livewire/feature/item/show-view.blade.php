@@ -2,7 +2,7 @@
     {{ $item->name }}
 @endsection
 
-@extends('layouts.sidebar.admin-nav')
+@extends('layouts.sidebar')
 
 @section('item-active')
     active
@@ -27,7 +27,8 @@
                 <div class="col-12 col-md-12 col-lg-5">
                     <div class="card profile-widget">
                         <div class="profile-widget-header">
-                            <img alt="image" src="{{ asset('image/package.png') }}" class="rounded-circle profile-widget-picture">
+                            <img alt="image" src="{{ asset('image/package.png') }}"
+                                 class="rounded-circle profile-widget-picture">
                             <div class="profile-widget-items">
                                 <div class="profile-widget-item">
                                     <div class="profile-widget-item-label">Jumlah Penyimpanan</div>
@@ -52,12 +53,19 @@
                             </div>
                         </div>
                         <div class="profile-widget-description">
-                            <div class="profile-widget-name">{{ $item->name }} <div class="text-muted d-inline font-weight-normal"><div class="slash"></div>
-                                    {{ $item->sku }}</div></div>
+                            <div class="profile-widget-name">{{ $item->name }}
+                                <div class="text-muted d-inline font-weight-normal">
+                                    <div class="slash"></div>
+                                    {{ $item->sku }}</div>
+                            </div>
 
                             <div class="text-right mt-4">
-                                <button class="btn btn-danger" wire:click="redirect_page('item.destroy', '{{ $item->id }}')">Hapus</button>
-                                <button class="btn btn-warning" wire:click="redirect_page('item.edit', '{{ $item->id }}')">Perbarui</button>
+                                <button class="btn btn-danger"
+                                        wire:click="redirect_page('item.destroy', '{{ $item->id }}')">Hapus
+                                </button>
+                                <button class="btn btn-warning"
+                                        wire:click="redirect_page('item.edit', '{{ $item->id }}')">Perbarui
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -66,28 +74,35 @@
                     <div class="card">
                         <div class="card-header">
                             <h4>Lokasi Penyimpanan</h4>
-                            <a href="{{ route('item.location.create', $item->id) }}" class="btn btn-primary">Tambah Baru</a>
+                            <a href="{{ route('item.location.create', $item->id) }}" class="btn btn-primary">Tambah
+                                Baru</a>
                         </div>
 
                         <div class="card-body">
                             <ul class="list-unstyled list-unstyled-border">
                                 @forelse($item->locations as $location)
-                                    <li class="media" wire:click="redirect_page('item.location.edit', '{{ $location->id }}')">
+                                    <li class="media"
+                                        wire:click="redirect_page('item.location.edit', '{{ $location->id }}')">
                                         <img class="mr-3 rounded" width="55" src="{{ asset('image/storage.png') }}">
                                         <div class="media-body">
                                             <div class="float-right">
-                                                <div class="font-weight-600 text-muted text-small">Stock: {{ $location->stock }}</div>
+                                                <div class="font-weight-600 text-muted text-small">
+                                                    Stock: {{ $location->stock }}</div>
                                             </div>
-                                            <div class="media-title">{{ $location->storage->aisle->warehouse->name }}</div>
-                                            <div class="media-subtitle">Lorong {{ $location->storage->aisle->code }}</div>
-                                            <div class="media-subtitle">Kolom {{ $location->storage->column->code }}</div>
+                                            <div
+                                                class="media-title">{{ $location->storage->aisle->warehouse->name }}</div>
+                                            <div class="media-subtitle">
+                                                Lorong {{ $location->storage->aisle->code }}</div>
+                                            <div class="media-subtitle">
+                                                Kolom {{ $location->storage->column->code }}</div>
                                             <div class="media-subtitle">Baris {{ $location->storage->row->code }}</div>
                                         </div>
                                     </li>
                                 @empty
                                     @livewire('component.state.unknown-state', [
                                     'title' => 'Barang ini tidak disimpan pada warehouse manapun.',
-                                    'subtitle' => 'Barang ini belum mempunyai lokasi penyimpanan, klik tombol dibawah untuk memulai membuat lokasi barang.',
+                                    'subtitle' => 'Barang ini belum mempunyai lokasi penyimpanan, klik tombol dibawah
+                                    untuk memulai membuat lokasi barang.',
                                     'primary_button_dest' => route('item.location.create', $item->id),
                                     'primary_button_text' => 'Buat Baru'
                                     ])

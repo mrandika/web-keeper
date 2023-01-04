@@ -68,7 +68,7 @@ Route::group(['prefix' => 'warehouse'], function() {
     });
 });
 
-Route::group(['prefix' => 'employee'], function () {
+Route::group(['prefix' => 'employee_data'], function () {
     Route::get('', \App\Http\Livewire\Feature\Employee\IndexView::class)
         ->middleware('log:GET')
         ->name('employee.index');

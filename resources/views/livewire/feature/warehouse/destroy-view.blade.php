@@ -2,7 +2,7 @@
     Hapus Warehouse
 @endsection
 
-@extends('layouts.sidebar.admin-nav')
+@extends('layouts.sidebar')
 
 @section('warehouse-active')
     active
@@ -12,13 +12,15 @@
     <section class="section">
         <div class="section-header">
             <div class="section-header-back">
-                <a href="{{ route('warehouse.show', $warehouse_id) }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+                <a href="{{ route('warehouse.show', $warehouse_id) }}" class="btn btn-icon"><i
+                        class="fas fa-arrow-left"></i></a>
             </div>
             <h1>Konfirmasi Penghapusan Warehouse</h1>
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active"><a href="{{ route('home') }}">Dashboard</a></div>
                 <div class="breadcrumb-item"><a href="{{ route('warehouse.index') }}">Warehouse</a></div>
-                <div class="breadcrumb-item"><a href="{{ route('warehouse.show', $warehouse_id) }}">{{ $warehouse->name }}</a></div>
+                <div class="breadcrumb-item"><a
+                        href="{{ route('warehouse.show', $warehouse_id) }}">{{ $warehouse->name }}</a></div>
                 <div class="breadcrumb-item">Hapus</div>
             </div>
         </div>
@@ -42,7 +44,8 @@
                             </div>
                             <h2>Anda yakin menghapus data warehouse ini?</h2>
                             <p class="lead">
-                                Data yang berkaitan dengan warehouse ini, seperti pegawai, barang, dan transaksi akan dihapus. Aksi ini <b>TIDAK DAPAT</b> dikembalikan dan akan dicatat pada log sistem.
+                                Data yang berkaitan dengan warehouse ini, seperti pegawai, barang, dan transaksi akan
+                                dihapus. Aksi ini <b>TIDAK DAPAT</b> dikembalikan dan akan dicatat pada log sistem.
                             </p>
                             <a href="#" wire:click="destroy" class="btn btn-danger mt-4">Ya, hapus</a>
 

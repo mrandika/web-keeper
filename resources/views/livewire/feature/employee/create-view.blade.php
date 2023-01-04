@@ -2,7 +2,7 @@
     Create Employee
 @endsection
 
-@extends('layouts.sidebar.admin-nav')
+@extends('layouts.sidebar')
 
 @section('employee-active')
     active
@@ -31,7 +31,8 @@
                         <div class="card-body">
                             <div class="float-right">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Search" wire:model.debounce.500ms="search_user">
+                                    <input type="text" class="form-control" placeholder="Search"
+                                           wire:model.debounce.500ms="search_user">
                                     <div class="input-group-append">
                                         <button class="btn btn-primary"><i class="fas fa-search"></i></button>
                                     </div>
@@ -43,9 +44,13 @@
                             <ul class="list-unstyled list-unstyled-border">
                                 @forelse($users as $user)
                                     <li class="media" wire:click="select_user('{{ $user->id }}')">
-                                        <img class="mr-3 rounded" width="55" src="{{ asset('image/avatar-1.png') }}" alt="{{ $user->data->fullname() }}">
+                                        <img class="mr-3 rounded" width="55" src="{{ asset('image/avatar-1.png') }}"
+                                             alt="{{ $user->data->fullname() }}">
                                         <div class="media-body">
-                                            <div class="float-right"><div class="font-weight-600 text-muted text-small">{{ $user->email }}</div></div>
+                                            <div class="float-right">
+                                                <div
+                                                    class="font-weight-600 text-muted text-small">{{ $user->email }}</div>
+                                            </div>
                                             <div class="media-title">{{ $user->data->fullname() }}</div>
                                             <div class="media-subtitle">Not Assigned</div>
                                         </div>
@@ -74,7 +79,8 @@
                         <div class="card-body">
                             <div class="float-right">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Search" wire:model.debounce.500ms="search_warehouse">
+                                    <input type="text" class="form-control" placeholder="Search"
+                                           wire:model.debounce.500ms="search_warehouse">
                                     <div class="input-group-append">
                                         <button class="btn btn-primary"><i class="fas fa-search"></i></button>
                                     </div>
@@ -86,9 +92,12 @@
                             <ul class="list-unstyled list-unstyled-border">
                                 @forelse($warehouses as $warehouse)
                                     <li class="media" wire:click="select_warehouse('{{ $warehouse->id }}')">
-                                        <img class="mr-3 rounded" width="55" src="{{ asset('image/warehouse.png') }}" alt="{{ $warehouse->name }}">
+                                        <img class="mr-3 rounded" width="55" src="{{ asset('image/warehouse.png') }}"
+                                             alt="{{ $warehouse->name }}">
                                         <div class="media-body">
-                                            <div class="float-right"><div class="font-weight-600 text-muted text-small">{{ '-' }} sales</div></div>
+                                            <div class="float-right">
+                                                <div class="font-weight-600 text-muted text-small">{{ '-' }} sales</div>
+                                            </div>
                                             <div class="media-title">{{ $warehouse->name }}</div>
                                             <div class="media-subtitle">{{ $warehouse->address }}</div>
                                         </div>
@@ -126,9 +135,13 @@
                             <ul class="list-unstyled list-unstyled-border">
                                 @isset($selected_user)
                                     <li class="media" wire:click="select_user('{{ $selected_user->id }}')">
-                                        <img class="mr-3 rounded" width="55" src="{{ asset('image/avatar-1.png') }}" alt="{{ $selected_user->data->fullname() }}">
+                                        <img class="mr-3 rounded" width="55" src="{{ asset('image/avatar-1.png') }}"
+                                             alt="{{ $selected_user->data->fullname() }}">
                                         <div class="media-body">
-                                            <div class="float-right"><div class="font-weight-600 text-muted text-small">{{ $selected_user->email }}</div></div>
+                                            <div class="float-right">
+                                                <div
+                                                    class="font-weight-600 text-muted text-small">{{ $selected_user->email }}</div>
+                                            </div>
                                             <div class="media-title">{{ $selected_user->data->fullname() }}</div>
                                             <div class="media-subtitle">Not Assigned</div>
                                         </div>
@@ -137,9 +150,12 @@
 
                                 @isset($selected_warehouse)
                                     <li class="media">
-                                        <img class="mr-3 rounded" width="55" src="{{ asset('image/warehouse.png') }}" alt="{{ $selected_warehouse->name }}">
+                                        <img class="mr-3 rounded" width="55" src="{{ asset('image/warehouse.png') }}"
+                                             alt="{{ $selected_warehouse->name }}">
                                         <div class="media-body">
-                                            <div class="float-right"><div class="font-weight-600 text-muted text-small">{{ '-' }} sales</div></div>
+                                            <div class="float-right">
+                                                <div class="font-weight-600 text-muted text-small">{{ '-' }} sales</div>
+                                            </div>
                                             <div class="media-title">{{ $selected_warehouse->name }}</div>
                                             <div class="media-subtitle">{{ $selected_warehouse->address }}</div>
                                         </div>
@@ -152,8 +168,13 @@
                                     <label>Role</label>
                                     <select class="form-control select2 select2-hidden-accessible" wire:model="role_id">
                                         <option value="0" disabled selected>Pilih Role</option>
-                                        <option value="{{ \App\Models\UserRole::where('name', 'Admin')->first()->id }}">Admin</option>
-                                        <option value="{{ \App\Models\UserRole::where('name', 'Employee')->first()->id }}">Pegawai</option>
+                                        <option value="{{ \App\Models\UserRole::where('name', 'Admin')->first()->id }}">
+                                            Admin
+                                        </option>
+                                        <option
+                                            value="{{ \App\Models\UserRole::where('name', 'Employee')->first()->id }}">
+                                            Pegawai
+                                        </option>
                                     </select>
                                 </div>
                             @else
@@ -163,7 +184,8 @@
                                     </div>
                                     <h2>Data pegawai dan warehouse kosong.</h2>
                                     <p class="lead">
-                                        Untuk melakukan assignment pegawai, silahkan pilih data pegawai dan warehouse terlebih dulu.
+                                        Untuk melakukan assignment pegawai, silahkan pilih data pegawai dan warehouse
+                                        terlebih dulu.
                                     </p>
                                 </div>
                             @endif
@@ -171,7 +193,9 @@
 
                         @if($selected_user && $selected_warehouse)
                             <div class="card-footer text-right">
-                                <button class="btn btn-primary" wire:click="store" wire:loading.class="btn-progress">Simpan</button>
+                                <button class="btn btn-primary" wire:click="store" wire:loading.class="btn-progress">
+                                    Simpan
+                                </button>
                             </div>
                         @endif
                     </div>

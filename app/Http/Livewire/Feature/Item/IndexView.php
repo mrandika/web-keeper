@@ -23,7 +23,11 @@ class IndexView extends Component
 
         $items = Item::with(['locations', 'locations.storage', 'locations.storage.aisle', 'locations.storage.aisle.warehouse'])
             ->whereHas('locations.storage.aisle.warehouse', function ($query) use ($user) {
-                $query->where('user_id', $user->id);
+                if ($user->role->name == 'Super-Admin') {
+                    $query->where('user_id', $user->id);
+                } else {
+                    $query->where('id', $user->employees->pluck('warehouse_id')->toArray());
+                }
             })
             ->where('name', 'like', '%'.$this->search_value.'%')
             ->paginate(10);

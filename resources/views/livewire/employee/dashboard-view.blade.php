@@ -2,7 +2,7 @@
     Beranda
 @endsection
 
-@extends('layouts.sidebar.admin-nav')
+@extends('layouts.sidebar')
 
 @section('dashboard-active')
     active

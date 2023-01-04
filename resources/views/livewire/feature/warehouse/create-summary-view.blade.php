@@ -7,7 +7,7 @@
     <script src="{{ asset('js/gmaps.js') }}"></script>
 @endsection
 
-@extends('layouts.sidebar.admin-nav')
+@extends('layouts.sidebar')
 
 @section('warehouse-active')
     active
@@ -70,28 +70,33 @@
                                 <div class="form-group row align-items-center">
                                     <label class="col-md-4 text-md-right text-left">Pemilik</label>
                                     <div class="col-lg-4 col-md-6">
-                                        <input type="text" class="form-control" value="{{ $warehouse->user->data->fullname() }} ({{ $warehouse->user->email }})" readonly disabled>
+                                        <input type="text" class="form-control"
+                                               value="{{ $warehouse->user->data->fullname() }} ({{ $warehouse->user->email }})"
+                                               readonly disabled>
                                     </div>
                                 </div>
 
                                 <div class="form-group row align-items-center">
                                     <label class="col-md-4 text-md-right text-left">Nama Warehouse</label>
                                     <div class="col-lg-4 col-md-6">
-                                        <input type="text" class="form-control" value="{{ $warehouse->name }}" readonly disabled>
+                                        <input type="text" class="form-control" value="{{ $warehouse->name }}" readonly
+                                               disabled>
                                     </div>
                                 </div>
 
                                 <div class="form-group row align-items-center">
                                     <label class="col-md-4 text-md-right text-left">Alamat Warehouse</label>
                                     <div class="col-lg-4 col-md-6">
-                                        <input type="text" class="form-control" value="{{ $warehouse->address }}" readonly disabled>
+                                        <input type="text" class="form-control" value="{{ $warehouse->address }}"
+                                               readonly disabled>
                                     </div>
                                 </div>
 
                                 <div class="form-group row align-items-center">
                                     <label class="col-md-4 text-md-right text-left">Jumlah Total Penyimpanan</label>
                                     <div class="col-lg-4 col-md-6">
-                                        <input type="text" class="form-control" value="{{ $warehouse->storages->count() }}" readonly disabled>
+                                        <input type="text" class="form-control"
+                                               value="{{ $warehouse->storages->count() }}" readonly disabled>
                                     </div>
                                 </div>
 
@@ -105,7 +110,9 @@
                                 <div class="form-group row">
                                     <div class="col-md-4"></div>
                                     <div class="col-lg-4 col-md-6 text-right">
-                                        <button wire:click="redirect_page('warehouse.index')" class="btn btn-icon icon-right btn-primary">Selesai</button>
+                                        <button wire:click="redirect_page('warehouse.index')"
+                                                class="btn btn-icon icon-right btn-primary">Selesai
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -119,7 +126,7 @@
 
 @section('js')
     <script>
-        $(document).on('turbolinks:load',function () {
+        $(document).on('turbolinks:load', function () {
             var map = new GMaps({
                 div: '#map',
                 lat: {{ $warehouse->latitude }},

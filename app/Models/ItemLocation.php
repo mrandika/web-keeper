@@ -12,7 +12,8 @@ class ItemLocation extends Model
 
     protected $fillable = [
         'item_id',
-        'warehouse_storage_id'
+        'warehouse_storage_id',
+        'stock'
     ];
 
     public function storage()

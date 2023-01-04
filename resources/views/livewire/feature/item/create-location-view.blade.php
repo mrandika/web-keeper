@@ -2,7 +2,7 @@
     Create Item
 @endsection
 
-@extends('layouts.sidebar.admin-nav')
+@extends('layouts.sidebar')
 
 @section('item-active')
     active
@@ -33,7 +33,8 @@
                         <div class="card-body">
                             <ul class="list-unstyled list-unstyled-border">
                                 <li class="media">
-                                    <img class="mr-3 rounded" width="55" src="{{ asset('image/package.png') }}" alt="{{ $item->name }}">
+                                    <img class="mr-3 rounded" width="55" src="{{ asset('image/package.png') }}"
+                                         alt="{{ $item->name }}">
                                     <div class="media-body">
                                         <div class="float-right">
                                             <div class="font-weight-600 text-muted text-small">
@@ -83,7 +84,8 @@
 
                             <div class="form-group">
                                 <label for="inputPassword4">Stock</label>
-                                <input type="number" class="form-control @error('stock') is-invalid @enderror" placeholder="Stock Barang" wire:model="stock">
+                                <input type="number" class="form-control @error('stock') is-invalid @enderror"
+                                       placeholder="Stock Barang" wire:model="stock">
 
                                 @error('stock')
                                 <span class="text-danger">{{ $message }}</span>

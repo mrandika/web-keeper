@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Feature\Employee;
 
 use App\Models\Employee;
+use App\Models\UserRole;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
@@ -38,9 +39,17 @@ class IndexView extends Component
         $search_value = $this->search_value;
 
         $employees = Employee::with('warehouse')->whereHas('warehouse', function ($wh_query) use ($user) {
-            $wh_query->where('user_id', $user->id);
-        })->with('user')->whereHas('user', function ($user_query) use ($search_value) {
+            if ($user->role->name == 'Super-Admin') {
+                $wh_query->where('user_id', $user->id);
+            } else {
+                $wh_query->whereIn('id', $user->employees->pluck('warehouse_id')->toArray());
+            }
+        })->with('user')->whereHas('user', function ($user_query) use ($search_value, $user) {
             $user_query->where('email', 'like', '%'.$search_value.'%');
+
+            if ($user->role->name != 'Super-Admin') {
+                $user_query->where('user_role_id', '!=', UserRole::where('name', 'Super-Admin')->first()->id);
+            }
         })->paginate(10);
 
         return view('livewire.feature.employee.index-view', ['employees' => $employees])

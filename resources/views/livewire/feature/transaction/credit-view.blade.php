@@ -2,7 +2,7 @@
     Debit Transaction
 @endsection
 
-@extends('layouts.sidebar.admin-nav')
+@extends('layouts.sidebar')
 
 @section('pos-active')
     active
@@ -54,7 +54,8 @@
 
                             <div class="float-right">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Search" wire:model.debounce.500ms="search_value">
+                                    <input type="text" class="form-control" placeholder="Search"
+                                           wire:model.debounce.500ms="search_value">
                                     <div class="input-group-append">
                                         <button class="btn btn-primary"><i class="fas fa-search"></i></button>
                                     </div>
@@ -66,7 +67,8 @@
                             <ul class="list-unstyled list-unstyled-border">
                                 @forelse($items as $item)
                                     <li class="media">
-                                        <img class="mr-3 rounded" width="55" src="{{ asset('image/package.png') }}" alt="{{ $item->name }}">
+                                        <img class="mr-3 rounded" width="55" src="{{ asset('image/package.png') }}"
+                                             alt="{{ $item->name }}">
                                         <div class="media-body">
                                             <div class="float-right">
                                                 <div class="font-weight-600 text-muted text-small">
@@ -85,7 +87,10 @@
                                                     @endif
 
                                                     <br>
-                                                    <button class="btn btn-outline-primary @if($stock == 0) disabled @endif" wire:click="select_item('{{ $item->id }}')">Pilih</button>
+                                                    <button
+                                                        class="btn btn-outline-primary @if($stock == 0) disabled @endif"
+                                                        wire:click="select_item('{{ $item->id }}')">Pilih
+                                                    </button>
                                                 </div>
                                             </div>
                                             <div class="media-title">{{ $item->name }}</div>
@@ -115,7 +120,8 @@
                             @if (isset($selected_item))
                                 <ul class="list-unstyled list-unstyled-border">
                                     <li class="media">
-                                        <img class="mr-3 rounded" width="55" src="{{ asset('image/package.png') }}" alt="{{ $item->name }}">
+                                        <img class="mr-3 rounded" width="55" src="{{ asset('image/package.png') }}"
+                                             alt="{{ $item->name }}">
                                         <div class="media-body">
                                             <div class="float-right">
                                                 <div class="font-weight-600 text-muted text-small">
@@ -143,10 +149,12 @@
 
                                 <div>
                                     <label for="inputState">Lokasi Penyimpanan</label>
-                                    <select id="inputState" class="form-control" wire:model="storage_id" wire:change="on_storage_selected">
+                                    <select id="inputState" class="form-control" wire:model="storage_id"
+                                            wire:change="on_storage_selected">
                                         <option value="0" selected disabled>Pilih Lokasi</option>
                                         @foreach($selected_item->locations as $location)
-                                            <option value="{{ $location->warehouse_storage_id }}">{{ $location->storage->row->code }}</option>
+                                            <option
+                                                value="{{ $location->warehouse_storage_id }}">{{ $location->storage->row->code }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -155,7 +163,9 @@
 
                         @if(isset($selected_item))
                             <div class="card-header text-right">
-                                <button class="btn btn-primary" wire:click="add_to_cart('{{ $selected_item->id }}')">Tambahkan</button>
+                                <button class="btn btn-primary" wire:click="add_to_cart('{{ $selected_item->id }}')">
+                                    Tambahkan
+                                </button>
                             </div>
                         @endif
                     </div>
@@ -170,15 +180,21 @@
                             <ul class="list-unstyled list-unstyled-border">
                                 @forelse($cart as $item)
                                     <li class="media">
-                                        <img class="mr-3 rounded-circle" width="50" src="{{ asset('image/package.png') }}" alt="avatar">
+                                        <img class="mr-3 rounded-circle" width="50"
+                                             src="{{ asset('image/package.png') }}" alt="avatar">
                                         <div class="media-body">
-                                            <div class="float-right text-primary">@ @currency($item['item']['price'])</div>
+                                            <div class="float-right text-primary">@ @currency($item['item']['price'])
+                                            </div>
                                             <div class="media-title">{{ $item['item']['name'] }}</div>
                                             <span class="text-small">{{ $item['qty'] }}x,  @currency($item['item']['price'] * $item['qty'])</span>
 
                                             <div class="text-right">
-                                                <button class="btn btn-sm btn-outline-primary" wire:click="qty('add', '{{ $item['item']['id'] }}')">+ Tambah</button>
-                                                <button class="btn btn-sm btn-outline-secondary" wire:click="qty('sub', '{{ $item['item']['id'] }}')">- Kurangi</button>
+                                                <button class="btn btn-sm btn-outline-primary"
+                                                        wire:click="qty('add', '{{ $item['item']['id'] }}')">+ Tambah
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-secondary"
+                                                        wire:click="qty('sub', '{{ $item['item']['id'] }}')">- Kurangi
+                                                </button>
                                             </div>
                                         </div>
                                     </li>
@@ -194,7 +210,9 @@
                         @if ($cart != [])
                             <div class="card-footer">
                                 <div class="text-right">
-                                    <button class="btn btn-primary" wire:click="checkout" wire:loading.class="btn-progress">Checkout</button>
+                                    <button class="btn btn-primary" wire:click="checkout"
+                                            wire:loading.class="btn-progress">Checkout
+                                    </button>
                                 </div>
                             </div>
                         @endif

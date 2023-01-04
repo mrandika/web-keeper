@@ -40,7 +40,12 @@ class CreateLocationView extends Component
     public function render()
     {
         $user = Auth::user();
-        $this->warehouses = Warehouse::where('user_id', $user->id)->get();
+
+        if ($user->role->name == 'Super-Admin') {
+            $this->warehouses = Warehouse::where('user_id', $user->id)->get();
+        } else {
+            $this->warehouses = Warehouse::where('id', $user->employees->pluck('warehouse_id')->toArray())->get();
+        }
 
         try {
             $this->item = Item::findOrFail($this->item_id);
@@ -77,10 +82,8 @@ class CreateLocationView extends Component
      */
     public function get_storages()
     {
-        $this->storages = WarehouseStorage::with('aisle')->whereHas('aisle', function ($aisle_query) {
-            $aisle_query->with('warehouse')->whereHas('warehouse', function ($wh_query) {
-                $wh_query->where('id', $this->warehouse_id);
-            });
+        $this->storages = WarehouseStorage::with('aisle.warehouse')->whereHas('aisle.warehouse', function ($query) {
+            $query->where('id', $this->warehouse_id);
         })->get();
     }
 

@@ -2,7 +2,7 @@
     Item
 @endsection
 
-@extends('layouts.sidebar.admin-nav')
+@extends('layouts.sidebar')
 
 @section('item-active')
     active
@@ -28,7 +28,8 @@
                         <div class="card-body">
                             <ul class="nav nav-pills">
                                 <li class="nav-item">
-                                    <a class="nav-link active" href="#">Semua <span class="badge badge-white">{{ $items->count() }}</span></a>
+                                    <a class="nav-link active" href="#">Semua <span
+                                            class="badge badge-white">{{ $items->count() }}</span></a>
                                 </li>
                             </ul>
                         </div>
@@ -66,7 +67,8 @@
                         <div class="card-body">
                             <div class="float-right">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Search" wire:model.debounce.500ms="search_value">
+                                    <input type="text" class="form-control" placeholder="Search"
+                                           wire:model.debounce.500ms="search_value">
                                     <div class="input-group-append">
                                         <button class="btn btn-primary"><i class="fas fa-search"></i></button>
                                     </div>
@@ -78,7 +80,8 @@
                             <ul class="list-unstyled list-unstyled-border">
                                 @forelse($items as $item)
                                     <li class="media" wire:click="redirect_page('item.show', '{{ $item->id }}')">
-                                        <img class="mr-3 rounded" width="55" src="{{ asset('image/package.png') }}" alt="{{ $item->name }}">
+                                        <img class="mr-3 rounded" width="55" src="{{ asset('image/package.png') }}"
+                                             alt="{{ $item->name }}">
                                         <div class="media-body">
                                             <div class="float-right">
                                                 <div class="font-weight-600 text-muted text-small">

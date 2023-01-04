@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Feature\Transaction;
 
 use App\Models\Transaction;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Livewire\Component;
 
@@ -36,6 +37,8 @@ class TransactionSelectionView extends Component
      */
     public function search_transaction()
     {
+        $user = Auth::user();
+
         $date = explode(' - ', $this->date);
         $from = date('Y-m-d H:i:s', strtotime($date[0].' 00:00:00'));
         $to = date('Y-m-d H:i:s', strtotime($date[1].' 23:59:59'));
@@ -49,7 +52,13 @@ class TransactionSelectionView extends Component
             $type[] = 2;
         }
 
-        $this->transactions = Transaction::whereBetween('created_at', [$from, $to])->whereIn('transaction_type_id', $type)->get();
+        $this->transactions = Transaction::with('details.location.storage.aisle.warehouse')->whereHas('details.location.storage.aisle.warehouse', function ($query) use ($user) {
+            if ($user->role->name == 'Super-Admin') {
+                $query->where('id', $user->id);
+            } else {
+                $query->whereIn('id', $user->employees->pluck('warehouse_id')->toArray());
+            }
+        })->whereBetween('created_at', [$from, $to])->whereIn('transaction_type_id', $type)->get();
         $this->emit('refreshComponent');
     }
 

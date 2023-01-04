@@ -2,7 +2,7 @@
     Perbarui Pegawai
 @endsection
 
-@extends('layouts.sidebar.admin-nav')
+@extends('layouts.sidebar')
 
 @section('employee-active')
     active
@@ -12,13 +12,16 @@
     <section class="section">
         <div class="section-header">
             <div class="section-header-back">
-                <a href="{{ route('employee.show', $employee_id) }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+                <a href="{{ route('employee.show', $employee_id) }}" class="btn btn-icon"><i
+                        class="fas fa-arrow-left"></i></a>
             </div>
             <h1>Perbarui Informasi Pegawai</h1>
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active"><a href="{{ route('home') }}">Dashboard</a></div>
                 <div class="breadcrumb-item"><a href="{{ route('employee.index') }}">Employee</a></div>
-                <div class="breadcrumb-item"><a href="{{ route('employee.show', $employee_id) }}">{{ $employee->user->data->fullname() }}</a></div>
+                <div class="breadcrumb-item"><a
+                        href="{{ route('employee.show', $employee_id) }}">{{ $employee->user->data->fullname() }}</a>
+                </div>
                 <div class="breadcrumb-item">Perbarui</div>
             </div>
         </div>
@@ -34,7 +37,8 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="inputEmail4">Nama Depan</label>
-                                <input type="text" class="form-control @error('first_name') is-invalid @enderror" placeholder="Nama Depan" wire:model="first_name">
+                                <input type="text" class="form-control @error('first_name') is-invalid @enderror"
+                                       placeholder="Nama Depan" wire:model="first_name">
 
                                 @error('first_name')
                                 <span class="text-danger">{{ $message }}</span>
@@ -42,7 +46,8 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="inputPassword4">Nama Belakang</label>
-                                <input type="text" class="form-control @error('last_name') is-invalid @enderror" placeholder="Nama Belakang" wire:model="last_name">
+                                <input type="text" class="form-control @error('last_name') is-invalid @enderror"
+                                       placeholder="Nama Belakang" wire:model="last_name">
 
                                 @error('last_name')
                                 <span class="text-danger">{{ $message }}</span>
@@ -52,7 +57,8 @@
 
                         <div class="form-group">
                             <label for="inputPassword4">Email</label>
-                            <input type="email" class="form-control @error('email') is-invalid @enderror" placeholder="Email" wire:model="email">
+                            <input type="email" class="form-control @error('email') is-invalid @enderror"
+                                   placeholder="Email" wire:model="email">
 
                             @error('email')
                             <span class="text-danger">{{ $message }}</span>
@@ -61,7 +67,8 @@
 
                         <div class="form-group">
                             <label for="inputPassword4">Nomor Telepon</label>
-                            <input type="phone_number" class="form-control @error('phone_number') is-invalid @enderror" placeholder="Nomor Telepon" wire:model="phone_number">
+                            <input type="phone_number" class="form-control @error('phone_number') is-invalid @enderror"
+                                   placeholder="Nomor Telepon" wire:model="phone_number">
 
                             @error('phone_number')
                             <span class="text-danger">{{ $message }}</span>
@@ -83,9 +90,14 @@
                             <label>Peran Pengguna</label>
                             <select class="form-control" wire:model="user_role_id">
                                 <option value="0" selected disabled>Pilih Peran Pengguna</option>
-                                <option value="{{ \App\Models\UserRole::where('name', 'Super-Admin')->first()->id }}" disabled>Super-Admin</option>
-                                <option value="{{ \App\Models\UserRole::where('name', 'Admin')->first()->id }}">Admin</option>
-                                <option value="{{ \App\Models\UserRole::where('name', 'Employee')->first()->id }}">Employee</option>
+                                <option value="{{ \App\Models\UserRole::where('name', 'Super-Admin')->first()->id }}"
+                                        disabled>Super-Admin
+                                </option>
+                                <option value="{{ \App\Models\UserRole::where('name', 'Admin')->first()->id }}">Admin
+                                </option>
+                                <option value="{{ \App\Models\UserRole::where('name', 'Employee')->first()->id }}">
+                                    Employee
+                                </option>
                             </select>
                         </div>
 
@@ -93,11 +105,13 @@
                             <label class="form-label">Status Akun</label>
                             <div class="selectgroup w-100">
                                 <label class="selectgroup-item">
-                                    <input type="radio" name="status" value="0" class="selectgroup-input" wire:model="status">
+                                    <input type="radio" name="status" value="0" class="selectgroup-input"
+                                           wire:model="status">
                                     <span class="selectgroup-button selectgroup-button-icon">Non-Aktif</span>
                                 </label>
                                 <label class="selectgroup-item">
-                                    <input type="radio" name="status" value="1" class="selectgroup-input" wire:model="status">
+                                    <input type="radio" name="status" value="1" class="selectgroup-input"
+                                           wire:model="status">
                                     <span class="selectgroup-button selectgroup-button-icon">Aktif</span>
                                 </label>
                             </div>

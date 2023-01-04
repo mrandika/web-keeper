@@ -31,7 +31,11 @@ class CreditView extends Component
         $user = Auth::user();
         $items = Item::with(['locations.storage.aisle.warehouse'])
             ->whereHas('locations.storage.aisle.warehouse', function ($query) use ($user) {
-                $query->where('user_id', $user->id);
+                if ($user->role->name == 'Super-Admin') {
+                    $query->where('user_id', $user->id);
+                } else {
+                    $query->whereIn('id', $user->employees->pluck('warehouse_id')->toArray());
+                }
             })
             ->get();
 

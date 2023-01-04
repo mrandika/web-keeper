@@ -6,7 +6,7 @@
     <script src="{{ asset('js/gmaps.js') }}"></script>
 @endsection
 
-@extends('layouts.sidebar.admin-nav')
+@extends('layouts.sidebar')
 
 @section('warehouse-active')
     active
@@ -64,12 +64,15 @@
                             </div>
                         </div>
 
-                        <form class="wizard-content mt-2 needs-validation" wire:submit.prevent="save_basic" novalidate="">
+                        <form class="wizard-content mt-2 needs-validation" wire:submit.prevent="save_basic"
+                              novalidate="">
                             <div class="wizard-pane">
                                 <div class="form-group row align-items-center">
                                     <label class="col-md-4 text-md-right text-left">Nama</label>
                                     <div class="col-lg-4 col-md-6">
-                                        <input type="text" name="name" class="form-control @error('warehouse.name') is-invalid @enderror" wire:model="warehouse.name">
+                                        <input type="text" name="name"
+                                               class="form-control @error('warehouse.name') is-invalid @enderror"
+                                               wire:model="warehouse.name">
 
                                         @error('warehouse.name')
                                         <div class="invalid-feedback">
@@ -82,7 +85,9 @@
                                 <div class="form-group row">
                                     <label class="col-md-4 text-md-right text-left mt-2">Alamat</label>
                                     <div class="col-lg-4 col-md-6">
-                                        <textarea id="loc-addr" class="form-control @error('warehouse.address') is-invalid @enderror" name="address" wire:model="warehouse.address"></textarea>
+                                        <textarea id="loc-addr"
+                                                  class="form-control @error('warehouse.address') is-invalid @enderror"
+                                                  name="address" wire:model="warehouse.address"></textarea>
 
                                         @error('address')
                                         <div class="invalid-feedback">
@@ -95,8 +100,12 @@
                                 <div class="form-group row" id="loc-long-el">
                                     <label class="col-md-4 text-md-right text-left mt-2">Longitude</label>
                                     <div class="col-lg-4 col-md-6">
-                                        <input type="text" id="loc-long" class="form-control @error('warehouse.longitude') is-invalid @enderror" name="longitude" aria-describedby="longitude-desc" wire:model="warehouse.longitude">
-                                        <small id="longitude-desc" class="form-text text-muted">Terisi otomatis oleh lokasi anda.</small>
+                                        <input type="text" id="loc-long"
+                                               class="form-control @error('warehouse.longitude') is-invalid @enderror"
+                                               name="longitude" aria-describedby="longitude-desc"
+                                               wire:model="warehouse.longitude">
+                                        <small id="longitude-desc" class="form-text text-muted">Terisi otomatis oleh
+                                            lokasi anda.</small>
 
                                         @error('warehouse.longitude')
                                         <div class="invalid-feedback">
@@ -109,8 +118,12 @@
                                 <div class="form-group row" id="loc-lat-el">
                                     <label class="col-md-4 text-md-right text-left mt-2">Latitude</label>
                                     <div class="col-lg-4 col-md-6">
-                                        <input type="text" id="loc-lat" class="form-control @error('warehouse.latitude') is-invalid @enderror" name="latitude" aria-describedby="latitude-desc" wire:model="warehouse.latitude">
-                                        <small id="latitude-desc" class="form-text text-muted">Terisi otomatis oleh lokasi anda.</small>
+                                        <input type="text" id="loc-lat"
+                                               class="form-control @error('warehouse.latitude') is-invalid @enderror"
+                                               name="latitude" aria-describedby="latitude-desc"
+                                               wire:model="warehouse.latitude">
+                                        <small id="latitude-desc" class="form-text text-muted">Terisi otomatis oleh
+                                            lokasi anda.</small>
 
                                         @error('warehouse.latitude')
                                         <div class="invalid-feedback">
@@ -123,7 +136,9 @@
                                 <div class="form-group row">
                                     <div class="col-md-4"></div>
                                     <div class="col-lg-4 col-md-6 text-right">
-                                        <button type="submit" class="btn btn-icon icon-right btn-primary" wire:loading.class="btn-progress">Selanjutnya <i class="fas fa-arrow-right"></i></button>
+                                        <button type="submit" class="btn btn-icon icon-right btn-primary"
+                                                wire:loading.class="btn-progress">Selanjutnya <i
+                                                class="fas fa-arrow-right"></i></button>
                                     </div>
                                 </div>
                             </div>
@@ -139,7 +154,7 @@
     <script>
         $(document).on('turbolinks:load', function () {
             GMaps.geolocate({
-                success: function(position) {
+                success: function (position) {
                     if (position.coords.latitude) {
                     @this.set('warehouse.latitude', position.coords.latitude, true);
                         $("#loc-lat").val(position.coords.latitude);
@@ -153,13 +168,13 @@
                     }
                 },
                 // when geolocation is blocked by the user
-                error: function(error) {
-                    console.error('Geolocation failed: '+error.message)
+                error: function (error) {
+                    console.error('Geolocation failed: ' + error.message)
                     $("#latitude-desc").text("Akses ke lokasi ditolak. Gunakan Google Maps untuk mengambil data latitude.");
                     $("#longitude-desc").text("Akses ke lokasi ditolak. Gunakan Google Maps untuk mengambil data longitude.");
                 },
                 // when the user's browser does not support
-                not_supported: function() {
+                not_supported: function () {
                     console.error("Your browser does not support geolocation");
                     $("#latitude-desc").text("Gunakan Google Maps untuk mengambil data latitude.");
                     $("#longitude-desc").text("Gunakan Google Maps untuk mengambil data longitude.");

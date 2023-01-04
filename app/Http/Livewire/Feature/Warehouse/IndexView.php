@@ -32,7 +32,11 @@ class IndexView extends Component
     {
         $user = Auth::user();
 
-        $warehouses = Warehouse::where('user_id', $user->id)->where('name', 'like', '%'.$this->search_value.'%')->get();
+        if ($user->role->name == 'Super-Admin') {
+            $warehouses = Warehouse::where('user_id', $user->id)->where('name', 'like', '%'.$this->search_value.'%')->get();
+        } else {
+            $warehouses = Warehouse::whereIn('id', $user->employees->pluck('warehouse_id')->toArray())->where('name', 'like', '%'.$this->search_value.'%')->get();
+        }
 
         return view('livewire.feature.warehouse.index-view', ['warehouses' => $warehouses])
             ->extends('layouts.dashboard')

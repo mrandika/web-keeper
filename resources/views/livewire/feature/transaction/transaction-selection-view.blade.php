@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{{ asset('css/daterangepicker.css') }}">
 @endsection
 
-@extends('layouts.sidebar.admin-nav')
+@extends('layouts.sidebar')
 
 @section('transaction-active')
     active
@@ -49,11 +49,13 @@
                                 <label class="form-label">Tipe Transaksi</label>
                                 <div class="selectgroup selectgroup-pills">
                                     <label class="selectgroup-item">
-                                        <input type="checkbox" name="value" value="DB" wire:model="type" class="selectgroup-input" checked="">
+                                        <input type="checkbox" name="value" value="DB" wire:model="type"
+                                               class="selectgroup-input" checked="">
                                         <span class="selectgroup-button">Debit</span>
                                     </label>
                                     <label class="selectgroup-item">
-                                        <input type="checkbox" name="value" value="CR" wire:model="type" class="selectgroup-input" checked="">
+                                        <input type="checkbox" name="value" value="CR" wire:model="type"
+                                               class="selectgroup-input" checked="">
                                         <span class="selectgroup-button">Credit</span>
                                     </label>
                                 </div>
@@ -84,7 +86,7 @@
                                 </thead>
                                 <tbody>
                                 @php
-                                $total = 0;
+                                    $total = 0;
                                 @endphp
                                 @forelse($transactions ?? [] as $transaction)
                                     @php
@@ -99,7 +101,9 @@
                                                 <div class="badge badge-primary">Credit</div>
                                             @endif
                                         </td>
-                                        <td>{{ $transaction->employee->user->data->fullname() }} ({{ $transaction->employee->user->email }})</td>
+                                        <td>{{ $transaction->employee->user->data->fullname() }}
+                                            ({{ $transaction->employee->user->email }})
+                                        </td>
                                         <td>{{ $transaction->details->count() }} barang</td>
                                         <td>@currency($transaction->total)</td>
                                     </tr>
@@ -121,7 +125,8 @@
                         </div>
                         <div class="card-footer text-right">
                             @if ($transactions != null)
-                                <a class="btn btn-warning btn-icon icon-left" wire:click="print_data"><i class="fas fa-print"></i> Print</a>
+                                <a class="btn btn-warning btn-icon icon-left" wire:click="print_data"><i
+                                        class="fas fa-print"></i> Print</a>
                             @endif
                         </div>
                     </div>

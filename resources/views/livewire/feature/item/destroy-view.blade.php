@@ -2,7 +2,7 @@
     Hapus Item
 @endsection
 
-@extends('layouts.sidebar.admin-nav')
+@extends('layouts.sidebar')
 
 @section('item-active')
     active
@@ -32,7 +32,8 @@
                         </div>
                         <h2>Anda yakin menghapus data barang ini?</h2>
                         <p class="lead">
-                            Data yang berkaitan dengan barang ini akan dihapus. Aksi ini <b>TIDAK DAPAT</b> dikembalikan dan akan dicatat pada log sistem.
+                            Data yang berkaitan dengan barang ini akan dihapus. Aksi ini <b>TIDAK DAPAT</b> dikembalikan
+                            dan akan dicatat pada log sistem.
                         </p>
                         <a href="#" wire:click="destroy" class="btn btn-danger mt-4">Ya, hapus</a>
 

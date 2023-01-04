@@ -2,7 +2,7 @@
     New Warehouse
 @endsection
 
-@extends('layouts.sidebar.admin-nav')
+@extends('layouts.sidebar')
 
 @section('warehouse-active')
     active
@@ -60,12 +60,15 @@
                             </div>
                         </div>
 
-                        <form class="wizard-content mt-2 needs-validation" wire:submit.prevent="save_storage" novalidate="">
+                        <form class="wizard-content mt-2 needs-validation" wire:submit.prevent="save_storage"
+                              novalidate="">
                             <div class="wizard-pane">
                                 <div class="form-group row align-items-center">
                                     <label class="col-md-4 text-md-right text-left">Kode</label>
                                     <div class="col-lg-4 col-md-6">
-                                        <input type="text" name="code" class="form-control @error('code') is-invalid @enderror" wire:model="code">
+                                        <input type="text" name="code"
+                                               class="form-control @error('code') is-invalid @enderror"
+                                               wire:model="code">
 
                                         @error('code')
                                         <div class="invalid-feedback">
@@ -78,7 +81,9 @@
                                 <div class="form-group row align-items-center">
                                     <label class="col-md-4 text-md-right text-left">Jumlah Lorong</label>
                                     <div class="col-lg-4 col-md-6">
-                                        <input type="number" name="aisle" class="form-control @error('aisle') is-invalid @enderror" wire:model="aisle">
+                                        <input type="number" name="aisle"
+                                               class="form-control @error('aisle') is-invalid @enderror"
+                                               wire:model="aisle">
 
                                         @error('aisle')
                                         <div class="invalid-feedback">
@@ -91,7 +96,9 @@
                                 <div class="form-group row align-items-center">
                                     <label class="col-md-4 text-md-right text-left">Jumlah Kolom per Lorong</label>
                                     <div class="col-lg-4 col-md-6">
-                                        <input type="number" name="column" class="form-control @error('column') is-invalid @enderror" wire:model="column">
+                                        <input type="number" name="column"
+                                               class="form-control @error('column') is-invalid @enderror"
+                                               wire:model="column">
 
                                         @error('column')
                                         <div class="invalid-feedback">
@@ -104,7 +111,8 @@
                                 <div class="form-group row align-items-center">
                                     <label class="col-md-4 text-md-right text-left">Jumlah Baris per Kolom</label>
                                     <div class="col-lg-4 col-md-6">
-                                        <input type="number" name="row" class="form-control @error('row') is-invalid @enderror" wire:model="row">
+                                        <input type="number" name="row"
+                                               class="form-control @error('row') is-invalid @enderror" wire:model="row">
 
                                         @error('row')
                                         <div class="invalid-feedback">
@@ -117,7 +125,9 @@
                                 <div class="form-group row">
                                     <div class="col-md-4"></div>
                                     <div class="col-lg-4 col-md-6 text-right">
-                                        <button type="submit" class="btn btn-icon icon-right btn-primary" wire:loading.class="btn-progress">Selanjutnya <i class="fas fa-arrow-right"></i></button>
+                                        <button type="submit" class="btn btn-icon icon-right btn-primary"
+                                                wire:loading.class="btn-progress">Selanjutnya <i
+                                                class="fas fa-arrow-right"></i></button>
                                     </div>
                                 </div>
                             </div>

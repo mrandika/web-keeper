@@ -2,7 +2,7 @@
     Transaction Detail
 @endsection
 
-@extends('layouts.sidebar.admin-nav')
+@extends('layouts.sidebar')
 
 @section('transaction-active')
     active
@@ -73,7 +73,9 @@
                                 <div class="col-lg-12 text-right">
                                     <div class="invoice-detail-item">
                                         <div class="invoice-detail-name">Total</div>
-                                        <div class="invoice-detail-value invoice-detail-value-lg">@currency($transaction->total)</div>
+                                        <div class="invoice-detail-value invoice-detail-value-lg">
+                                            @currency($transaction->total)
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -82,7 +84,9 @@
                 </div>
                 <hr>
                 <div class="text-md-right">
-                    <button class="btn btn-warning btn-icon icon-left" onclick="print('#print_area')"><i class="fas fa-print"></i> Print</button>
+                    <button class="btn btn-warning btn-icon icon-left" onclick="print('#print_area')"><i
+                            class="fas fa-print"></i> Print
+                    </button>
                 </div>
             </div>
         </div>

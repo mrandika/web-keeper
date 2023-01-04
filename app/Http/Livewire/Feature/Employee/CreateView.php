@@ -36,7 +36,11 @@ class CreateView extends Component
                 ->orWhere('last_name', 'like', '%'.$this->search_user.'%');
         })->paginate(5);
 
-        $warehouses = Warehouse::where('user_id', $user->id)->where('name', 'like', '%'.$this->search_warehouse.'%')->get();
+        if ($user->role->name == 'Super-Admin') {
+            $warehouses = Warehouse::where('user_id', $user->id)->where('name', 'like', '%'.$this->search_warehouse.'%')->get();
+        } else {
+            $warehouses = Warehouse::whereIn('id', $user->employees->pluck('warehouse_id')->toArray())->where('name', 'like', '%'.$this->search_warehouse.'%')->get();
+        }
 
         return view('livewire.feature.employee.create-view', ['users' => $users, 'warehouses' => $warehouses])
             ->extends('layouts.dashboard')
