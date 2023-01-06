@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Api\Feature;
 
 use App\Http\Controllers\Controller;
 use App\Models\Item;
+use App\Models\ItemLocation;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class ItemController extends Controller
@@ -46,6 +48,17 @@ class ItemController extends Controller
         return $this->response($items);
     }
 
+    public function show(Request $request)
+    {
+        try {
+            $item = Item::with('locations.storage.aisle')->with('locations.storage.row')->findOrFail($request->item_id);
+
+            return $this->response($item);
+        } catch (ModelNotFoundException $e) {
+            return $this->response(null, 404, $e->getMessage(), $e);
+        }
+    }
+
     /**
      * @param Request $request
      * @return mixed
@@ -55,7 +68,9 @@ class ItemController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'min:5', 'max:75'],
             'sku' => ['required', 'min:2', 'max:25'],
-            'price' => ['required', 'numeric']
+            'price' => ['required', 'numeric'],
+            'storage_id' => ['required'],
+            'stock' => ['required']
         ]);
 
         if ($validator->fails()) {
@@ -63,10 +78,19 @@ class ItemController extends Controller
         }
 
         $item = new Item();
-        $item->name = $request->name;
-        $item->sku = $request->sku;
-        $item->price = $request->price;
-        $item->save();
+
+        DB::transaction(function () use ($request, $item) {
+            $item->name = $request->name;
+            $item->sku = $request->sku;
+            $item->price = $request->price;
+            $item->save();
+
+            $location = new ItemLocation();
+            $location->item_id = $item->id;
+            $location->warehouse_storage_id = $request->storage_id;
+            $location->stock = $request->stock;
+            $location->save();
+        });
 
         return $this->response($item, 200, 'Item store success');
     }

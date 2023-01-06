@@ -64,6 +64,6 @@ class CreateView extends Component
         $item->price = $this->price;
         $item->save();
 
-        return $this->redirect_page('item.show', $item->id);
+        return $this->redirect_page('item.location.create', $item->id);
     }
 }

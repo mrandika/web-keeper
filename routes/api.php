@@ -22,11 +22,21 @@ Route::post('login', [\App\Http\Controllers\Api\AuthController::class, 'login'])
 
 Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::get('profile', [\App\Http\Controllers\Api\AuthController::class, 'profile'])->name('api.auth.profile');
+    Route::post('logout', [\App\Http\Controllers\Api\AuthController::class, 'logout'])->name('api.auth.logout');
+
+    Route::group(['prefix' => 'storage'], function () {
+        Route::get('', [\App\Http\Controllers\Api\Feature\StorageController::class, 'index'])
+            ->middleware('log:GET')
+            ->name('api.item.index');
+    });
 
     Route::group(['prefix' => 'item'], function () {
         Route::get('', [\App\Http\Controllers\Api\Feature\ItemController::class, 'index'])
             ->middleware('log:GET')
             ->name('api.item.index');
+        Route::get('show/{item_id}', [\App\Http\Controllers\Api\Feature\ItemController::class, 'show'])
+            ->middleware('log:GET')
+            ->name('api.item.show');
         Route::post('store', [\App\Http\Controllers\Api\Feature\ItemController::class, 'store'])
             ->middleware('log:POST')
             ->name('api.item.store');

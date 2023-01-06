@@ -61,6 +61,7 @@ class ItemLocationController extends Controller
     public function update(Request $request)
     {
         $validator = Validator::make($request->all(), [
+            'item_id' => ['required'],
             'warehouse_id' => ['required'],
             'storage_id' => ['required'],
             'stock' => ['required', 'numeric']
@@ -80,7 +81,7 @@ class ItemLocationController extends Controller
             return $this->response(null, 404, $e->getMessage(), $e);
         }
 
-        return $this->response($location, 200, 'Location store success');
+        return $this->response($location, 200, 'Location update success');
     }
 
     /**

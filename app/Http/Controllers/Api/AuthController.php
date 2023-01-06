@@ -81,4 +81,18 @@ class AuthController extends Controller
             return $this->response(null, 500, 'Server failed to response the request', $e);
         }
     }
+
+    /**
+     * @return void
+     */
+    public function logout(Request $request)
+    {
+        try {
+            $request->user()->currentAccessToken()->delete();
+
+            return $this->response(['user' => null]);
+        } catch (\Exception $e) {
+            return $this->response(null, 500, 'Server failed to response the request', $e);
+        }
+    }
 }
