@@ -6,7 +6,7 @@
 
             <li class="menu-header">Manajemen</li>
             <li class=@yield('warehouse-active')><a class="nav-link" href="{{ route('warehouse.index') }}"><i class="far fa-warehouse"></i> <span>Warehouse</span></a></li>
-            <li class=@yield('employee-active')><a class="nav-link" href="{{ route('employee.index') }}"><i class="far fa-user"></i> <span>Employee</span></a></li>
+            <li class=@yield('employee-active')><a class="nav-link" href="{{ route('employee.index') }}"><i class="far fa-user"></i> <span>Pegawai</span></a></li>
             <li class=@yield('item-active')><a class="nav-link" href="{{ route('item.index') }}"><i class="far fa-box"></i> <span>Item</span></a></li>
 
 
@@ -34,7 +34,7 @@
 
             <li class="menu-header">Manajemen</li>
             <li class=@yield('warehouse-active')><a class="nav-link" href="{{ route('warehouse.index') }}"><i class="far fa-warehouse"></i> <span>Warehouse</span></a></li>
-            <li class=@yield('employee-active')><a class="nav-link" href="{{ route('employee.index') }}"><i class="far fa-user"></i> <span>Employee</span></a></li>
+            <li class=@yield('employee-active')><a class="nav-link" href="{{ route('employee.index') }}"><i class="far fa-user"></i> <span>Pegawai</span></a></li>
         </ul>
     @endif
 

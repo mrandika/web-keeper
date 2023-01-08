@@ -20,7 +20,7 @@ class CreateView extends Component
     public $search_user = '', $search_warehouse = '';
     public $selected_user = null, $selected_warehouse = null;
 
-    public $role_id;
+    public $role_id = '0';
 
     /**
      * Render Livewire component
@@ -92,6 +92,6 @@ class CreateView extends Component
 
         $this->selected_user = null;
         $this->selected_warehouse = null;
-        $this->role_id = '';
+        $this->role_id = '0';
     }
 }
