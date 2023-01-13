@@ -54,11 +54,12 @@ class TransactionSelectionView extends Component
 
         $this->transactions = Transaction::with('details.location.storage.aisle.warehouse')->whereHas('details.location.storage.aisle.warehouse', function ($query) use ($user) {
             if ($user->role->name == 'Super-Admin') {
-                $query->where('id', $user->id);
+                $query->where('user_id', $user->id);
             } else {
                 $query->whereIn('id', $user->employees->pluck('warehouse_id')->toArray());
             }
         })->whereBetween('created_at', [$from, $to])->whereIn('transaction_type_id', $type)->get();
+
         $this->emit('refreshComponent');
     }
 

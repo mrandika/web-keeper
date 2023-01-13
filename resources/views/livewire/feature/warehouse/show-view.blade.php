@@ -122,7 +122,7 @@
                                     'title' => 'Tidak ada barang di warehouse ini',
                                     'subtitle' => 'Warehouse ini belum mempunyai barang, klik tombol dibawah untuk
                                     memulai membuat barang.',
-                                    'primary_button_dest' => route('warehouse.create'),
+                                    'primary_button_dest' => route('item.create'),
                                     'primary_button_text' => 'Buat Baru'
                                     ])
                                 @endforelse
